@@ -2,6 +2,8 @@ plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
 }
 
+archivesBaseName = rootProject.archives_base_name + "-forge"
+
 architectury {
     platformSetupLoomIde()
     forge()
@@ -45,7 +47,7 @@ processResources {
     inputs.property "version", project.version
 
     filesMatching("META-INF/mods.toml") {
-        expand "version": project.version
+        expand(project.properties)
     }
 }
 
@@ -82,7 +84,7 @@ components.java {
 publishing {
     publications {
         mavenForge(MavenPublication) {
-            artifactId = rootProject.archives_base_name + "-" + project.name
+            artifactId = rootProject.archives_base_name + "-" + project.name + "-forge"
             from components.java
         }
     }

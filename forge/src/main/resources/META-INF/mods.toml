@@ -9,9 +9,9 @@ version = "${version}"
 displayName = "Fancy Dyes"
 authors = "Haizor"
 description = '''
-Adds new dyes that can be applied to items & armor.
+${mod_description}
 '''
-#logoFile = ""
+logoFile = "assets/fancydyes/icon.png"
 
 [[dependencies.fancydyes]]
 modId = "forge"
