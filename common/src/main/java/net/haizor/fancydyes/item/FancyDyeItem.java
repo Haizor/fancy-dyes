@@ -67,7 +67,7 @@ public class FancyDyeItem extends Item {
     @Override
     public boolean overrideStackedOnOther(ItemStack itemStack, Slot slot, ClickAction clickAction, Player player) {
         ItemStack other = slot.getItem();
-        if (other.isEmpty()) return false;
+        if (!FancyDye.isDyeable(other)) return false;
         if (clickAction.equals(ClickAction.SECONDARY)) {
             FancyDye otherDye = FancyDye.getDye(other);
 
@@ -92,11 +92,6 @@ public class FancyDyeItem extends Item {
                 player.playSound(SoundEvents.PLAYER_SPLASH_HIGH_SPEED, 1.0f, 1.0f);
             return true;
         }
-        return super.overrideStackedOnOther(itemStack, slot, clickAction, player);
-    }
-
-    @Override
-    public Optional<TooltipComponent> getTooltipImage(ItemStack itemStack) {
-        return Optional.empty();
+        return false;
     }
 }
