@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "net.haizor.fancydyes.fabric.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "MixinHumanoidArmorLayer",
+    "MixinItemRenderer"
+  ],
+  "mixins": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

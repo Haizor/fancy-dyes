@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "fancydyes:shimmer_purple_dye_from_solid"
+    ]
+  },
+  "criteria": {
+    "criteria": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fancydyes:empty_dye_bottle"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "fancydyes:shimmer_purple_dye_from_solid"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "criteria",
+      "has_the_recipe"
+    ]
+  ]
+}

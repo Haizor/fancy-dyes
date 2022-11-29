@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "fancydyes",
+  "version": "${version}",
+  "name": "Fancy Dyes",
+  "description": "${mod_description}",
+  "authors": [
+    "Haizor"
+  ],
+  "contact": {
+    "sources": "https://github.com/Haizor/fancy-dyes"
+  },
+  "license": "MIT",
+  "icon": "assets/fancydyes/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.haizor.fancydyes.fabric.FancyDyesFabric"
+    ],
+    "client": [
+      "net.haizor.fancydyes.fabric.FancyDyesFabricClient"
+    ],
+    "fabric-datagen": [
+      "net.haizor.fancydyes.fabric.data.FancyDyesDataFabric"
+    ]
+  },
+  "mixins": [
+    "fancydyes-common.mixins.json",
+    "fancydyes.mixins.json"
+  ],
+  "depends": {
+    "fabric": "*",
+    "minecraft": ">=1.18.2",
+    "architectury": ">=4.9.83"
+  }
+}

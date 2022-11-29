@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "fancydyes:shimmer_red_dye"
+    },
+    {
+      "item": "fancydyes:shimmer_orange_dye"
+    },
+    {
+      "item": "fancydyes:shimmer_yellow_dye"
+    },
+    {
+      "item": "fancydyes:shimmer_green_dye"
+    },
+    {
+      "item": "fancydyes:shimmer_cyan_dye"
+    },
+    {
+      "item": "fancydyes:shimmer_blue_dye"
+    },
+    {
+      "item": "fancydyes:shimmer_purple_dye"
+    },
+    {
+      "item": "fancydyes:shimmer_pink_dye"
+    }
+  ],
+  "result": {
+    "item": "fancydyes:rainbow_dye",
+    "count": 1
+  }
+}

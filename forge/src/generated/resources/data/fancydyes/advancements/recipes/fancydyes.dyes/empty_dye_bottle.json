@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "fancydyes:empty_dye_bottle"
+    ]
+  },
+  "criteria": {
+    "criteria": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:glass"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "fancydyes:empty_dye_bottle"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "criteria",
+      "has_the_recipe"
+    ]
+  ]
+}

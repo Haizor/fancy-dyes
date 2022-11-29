@@ -1,0 +1,35 @@
+modLoader = "javafml"
+loaderVersion = "[40,)"
+#issueTrackerURL = ""
+license = "MIT"
+
+[[mods]]
+modId = "fancydyes"
+version = "${version}"
+displayName = "Fancy Dyes"
+authors = "Haizor"
+description = '''
+Adds new dyes that can be applied to items & armor.
+'''
+#logoFile = ""
+
+[[dependencies.fancydyes]]
+modId = "forge"
+mandatory = true
+versionRange = "[40,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.fancydyes]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.18.2,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.fancydyes]]
+modId = "architectury"
+mandatory = true
+versionRange = "[4.9.83,)"
+ordering = "AFTER"
+side = "BOTH"

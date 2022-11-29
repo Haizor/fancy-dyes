@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "a a",
+    "a a",
+    " a "
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:glass"
+    }
+  },
+  "result": {
+    "item": "fancydyes:empty_dye_bottle",
+    "count": 4
+  }
+}

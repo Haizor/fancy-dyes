@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "package": "net.haizor.fancydyes.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "ItemRendererAccessor",
+    "MixinBlockEntityWithoutLevelRenderer",
+    "MixinElytraLayer",
+    "MixinRenderBuffers"
+  ],
+  "mixins": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
