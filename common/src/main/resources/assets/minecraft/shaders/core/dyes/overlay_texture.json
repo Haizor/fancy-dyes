@@ -4,11 +4,17 @@
         "srcrgb": "srcalpha",
         "dstrgb": "1-srcalpha"
     },
-    "vertex": "dyes/overlay_color_armor",
-    "fragment": "dyes/overlay_color_armor",
+    "vertex": "dyes/overlay_texture",
+    "fragment": "rendertype_armor_cutout_no_cull",
     "attributes": [
         "Position",
+        "UV0",
         "Color"
+    ],
+    "samplers": [
+        {
+            "name": "Sampler0"
+        }
     ],
     "uniforms": [
         {
@@ -90,6 +96,29 @@
             "count": 1,
             "values": [
                 0
+            ]
+        },
+        {
+            "name": "TextureMat",
+            "type": "matrix4x4",
+            "count": 16,
+            "values": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
             ]
         }
     ]

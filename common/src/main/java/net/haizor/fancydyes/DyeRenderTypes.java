@@ -28,63 +28,63 @@ public class DyeRenderTypes {
     private static final List<RenderType> SOLID_TYPES = new ArrayList<>();
 
     public static final RenderTypeSupplier SOLID_ARMOR = armor("solid_armor", DefaultVertexFormat.NEW_ENTITY, b -> b
-            .setShaderState(Shaders.OVERLAY_TEXTURE_ARMOR_SHARD)
+            .setShaderState(Shaders.OVERLAY_TEXTURE_LIT_SHARD)
             .setTextureState(new TextureStateShard(new ResourceLocation(FancyDyes.MOD_ID, "textures/dye_scrolls/solid.png"), true, false))
     );
 
-    public static final RenderTypeSupplier SOLID_ITEM = item("solid_item", DefaultVertexFormat.POSITION_COLOR_TEX, b -> b
-            .setShaderState(Shaders.OVERLAY_TEXTURE_ITEM_SHARD)
+    public static final RenderTypeSupplier SOLID_ITEM = item("solid_item", DefaultVertexFormat.NEW_ENTITY, b -> b
+            .setShaderState(Shaders.OVERLAY_TEXTURE_LIT_SHARD)
             .setTextureState(new TextureStateShard(new ResourceLocation(FancyDyes.MOD_ID, "textures/dye_scrolls/solid.png"), true, false))
     );
 
-    public static final RenderTypeSupplier SHIMMER_ARMOR = armor("shimmer_armor", DefaultVertexFormat.POSITION_COLOR_TEX, b -> b
-            .setShaderState(Shaders.OVERLAY_TEXTURE_ARMOR_SHARD)
+    public static final RenderTypeSupplier SHIMMER_ARMOR = armor("shimmer_armor", DefaultVertexFormat.NEW_ENTITY, b -> b
+            .setShaderState(Shaders.OVERLAY_TEXTURE_SHARD)
             .setTexturingState(ENTITY_GLINT_TEXTURING)
             .setTextureState(new TextureStateShard(new ResourceLocation(FancyDyes.MOD_ID, "textures/dye_scrolls/shimmer.png"), true, false))
     );
 
-    public static final RenderTypeSupplier SHIMMER_ITEM = item("shimmer_item", DefaultVertexFormat.POSITION_COLOR_TEX, b -> b
-            .setShaderState(Shaders.OVERLAY_TEXTURE_ITEM_SHARD)
+    public static final RenderTypeSupplier SHIMMER_ITEM = item("shimmer_item", DefaultVertexFormat.NEW_ENTITY, b -> b
+            .setShaderState(Shaders.OVERLAY_TEXTURE_SHARD)
             .setTexturingState(GLINT_TEXTURING)
             .setTextureState(new TextureStateShard(new ResourceLocation(FancyDyes.MOD_ID, "textures/dye_scrolls/shimmer.png"), true, false))
     );
 
     public static final RenderTypeSupplier INVERT_ARMOR = baseArmor("invert_armor", DefaultVertexFormat.NEW_ENTITY, b -> b
-            .setShaderState(Shaders.INVERT_ARMOR_SHARD)
+            .setShaderState(Shaders.INVERT_SHARD)
     );
 
     public static final RenderTypeSupplier RAINBOW_ARMOR = armor("rainbow_armor", DefaultVertexFormat.NEW_ENTITY, b -> b
-            .setShaderState(Shaders.OVERLAY_TEXTURE_ARMOR_SHARD)
+            .setShaderState(Shaders.OVERLAY_TEXTURE_SHARD)
             .setTexturingState(verticalScroll(0.16f))
             .setTextureState(new TextureStateShard(new ResourceLocation(FancyDyes.MOD_ID, "textures/dye_scrolls/gradient.png"), true, false))
     );
 
-    public static final RenderTypeSupplier RAINBOW_ITEM = item("rainbow_item", DefaultVertexFormat.POSITION_COLOR_TEX, b -> b
-            .setShaderState(Shaders.OVERLAY_TEXTURE_ITEM_SHARD)
+    public static final RenderTypeSupplier RAINBOW_ITEM = item("rainbow_item", DefaultVertexFormat.NEW_ENTITY, b -> b
+            .setShaderState(Shaders.OVERLAY_TEXTURE_SHARD)
             .setTexturingState(verticalScroll(8f))
             .setTextureState(new TextureStateShard(new ResourceLocation(FancyDyes.MOD_ID, "textures/dye_scrolls/gradient.png"), true, false))
     );
 
     public static final RenderTypeSupplier AURORA_ARMOR = armor("aurora_armor", DefaultVertexFormat.NEW_ENTITY, b -> b
-            .setShaderState(Shaders.OVERLAY_TEXTURE_ARMOR_SHARD)
+            .setShaderState(Shaders.OVERLAY_TEXTURE_SHARD)
             .setTexturingState(angledScroll(0.6f, 80f))
             .setTextureState(new TextureStateShard(new ResourceLocation(FancyDyes.MOD_ID, "textures/dye_scrolls/aurora.png"), true, false))
     );
 
-    public static final RenderTypeSupplier AURORA_ITEM = item("aurora_item", DefaultVertexFormat.POSITION_COLOR_TEX, b -> b
-            .setShaderState(Shaders.OVERLAY_TEXTURE_ITEM_SHARD)
+    public static final RenderTypeSupplier AURORA_ITEM = item("aurora_item", DefaultVertexFormat.NEW_ENTITY, b -> b
+            .setShaderState(Shaders.OVERLAY_TEXTURE_SHARD)
             .setTexturingState(angledScroll(8f, 80f))
             .setTextureState(new TextureStateShard(new ResourceLocation(FancyDyes.MOD_ID, "textures/dye_scrolls/aurora.png"), true, false))
     );
 
     public static final RenderTypeSupplier FLAME_ARMOR = armor("flame_armor", DefaultVertexFormat.NEW_ENTITY, b -> b
-            .setShaderState(Shaders.OVERLAY_TEXTURE_ARMOR_SHARD)
+            .setShaderState(Shaders.OVERLAY_TEXTURE_SHARD)
             .setTexturingState(verticalScroll(0.32f))
             .setTextureState(new TextureStateShard(new ResourceLocation(FancyDyes.MOD_ID, "textures/dye_scrolls/flame.png"), true, false))
     );
 
-    public static final RenderTypeSupplier FLAME_ITEM = item("flame_item", DefaultVertexFormat.POSITION_COLOR_TEX, b -> b
-            .setShaderState(Shaders.OVERLAY_TEXTURE_ITEM_SHARD)
+    public static final RenderTypeSupplier FLAME_ITEM = item("flame_item", DefaultVertexFormat.NEW_ENTITY, b -> b
+            .setShaderState(Shaders.OVERLAY_TEXTURE_SHARD)
             .setTexturingState(verticalScroll(8f))
             .setTextureState(new TextureStateShard(new ResourceLocation(FancyDyes.MOD_ID, "textures/dye_scrolls/flame.png"), true, false))
     );
@@ -103,6 +103,7 @@ public class DyeRenderTypes {
             .setWriteMaskState(COLOR_WRITE)
             .setCullState(NO_CULL)
             .setDepthTestState(EQUAL_DEPTH_TEST)
+            .setLightmapState(LIGHTMAP)
             .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
             .setLayeringState(VIEW_OFFSET_Z_LAYERING);
 
@@ -135,6 +136,7 @@ public class DyeRenderTypes {
                 .setWriteMaskState(COLOR_WRITE)
                 .setCullState(NO_CULL)
                 .setDepthTestState(EQUAL_DEPTH_TEST)
+                .setLightmapState(LIGHTMAP)
                 .setTransparencyState(TRANSLUCENT_TRANSPARENCY);
 
         f.accept(builder);
@@ -149,9 +151,7 @@ public class DyeRenderTypes {
             Matrix4f matrix4f = Matrix4f.createTranslateMatrix(0.0F, h, 0.0F);
             matrix4f.multiply(Matrix4f.createScaleMatrix(f, f, f));
             RenderSystem.setTextureMatrix(matrix4f);
-        }, () -> {
-            RenderSystem.resetTextureMatrix();
-        });
+        }, RenderSystem::resetTextureMatrix);
     }
 
     public static TexturingStateShard horizontalScroll(float f) {
@@ -196,21 +196,21 @@ public class DyeRenderTypes {
     }
 
     public static class Shaders {
-        public static ShaderInstance OVERLAY_TEXTURE_ARMOR;
-        public static ShaderStateShard OVERLAY_TEXTURE_ARMOR_SHARD = new ShaderStateShard(() -> OVERLAY_TEXTURE_ARMOR);
+        public static ShaderInstance OVERLAY_TEXTURE;
+        public static ShaderStateShard OVERLAY_TEXTURE_SHARD = new ShaderStateShard(() -> OVERLAY_TEXTURE);
 
-        public static ShaderInstance OVERLAY_TEXTURE_ITEM;
-        public static ShaderStateShard OVERLAY_TEXTURE_ITEM_SHARD = new ShaderStateShard(() -> OVERLAY_TEXTURE_ITEM);
+        public static ShaderInstance INVERT;
+        public static ShaderStateShard INVERT_SHARD = new ShaderStateShard(() -> INVERT);
 
-        public static ShaderInstance INVERT_ARMOR;
-        public static ShaderStateShard INVERT_ARMOR_SHARD = new ShaderStateShard(() -> INVERT_ARMOR);
+        public static ShaderInstance OVERLAY_TEXTURE_LIT;
+        public static ShaderStateShard OVERLAY_TEXTURE_LIT_SHARD = new ShaderStateShard(() -> OVERLAY_TEXTURE_LIT);
 
         public static void init() {
             ClientReloadShadersEvent.EVENT.register((manager, sink) -> {
                 try {
-                    sink.registerShader(new ShaderInstance(manager, "dyes/overlay_texture_armor", DefaultVertexFormat.POSITION_COLOR_TEX), (s) -> OVERLAY_TEXTURE_ARMOR = s);
-                    sink.registerShader(new ShaderInstance(manager, "dyes/overlay_texture_item", DefaultVertexFormat.POSITION_COLOR_TEX), (s) -> OVERLAY_TEXTURE_ITEM = s);
-                    sink.registerShader(new ShaderInstance(manager, "dyes/invert_armor", DefaultVertexFormat.NEW_ENTITY), (s) -> INVERT_ARMOR = s);
+                    sink.registerShader(new ShaderInstance(manager, "dyes/overlay_texture", DefaultVertexFormat.POSITION_COLOR_TEX), (s) -> OVERLAY_TEXTURE = s);
+                    sink.registerShader(new ShaderInstance(manager, "dyes/invert", DefaultVertexFormat.NEW_ENTITY), (s) -> INVERT = s);
+                    sink.registerShader(new ShaderInstance(manager, "dyes/overlay_texture_lit", DefaultVertexFormat.NEW_ENTITY), (s) -> OVERLAY_TEXTURE_LIT = s);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

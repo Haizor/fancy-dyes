@@ -4,8 +4,8 @@
     "srcrgb": "srcalpha",
     "dstrgb": "1-srcalpha"
   },
-  "vertex": "dyes/rainbow_armor",
-  "fragment": "dyes/rainbow_armor",
+  "vertex": "rendertype_armor_cutout_no_cull",
+  "fragment": "dyes/invert",
   "attributes": [
     "Position",
     "Color",
