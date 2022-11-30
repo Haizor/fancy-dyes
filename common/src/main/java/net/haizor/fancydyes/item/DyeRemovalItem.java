@@ -1,10 +1,10 @@
 package net.haizor.fancydyes.item;
 
 import net.haizor.fancydyes.dyes.FancyDye;
+import net.haizor.fancydyes.tooltip.TooltipHelper;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickAction;
@@ -15,6 +15,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DyeRemovalItem extends Item {
@@ -23,17 +24,17 @@ public class DyeRemovalItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> list, TooltipFlag tooltipFlag) {
+    public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> components, TooltipFlag tooltipFlag) {
         if (level == null || !level.isClientSide) return;
-        list.add(new TextComponent("Used to remove dyes").withStyle(ChatFormatting.GRAY));
-        if (!Screen.hasShiftDown()) {
-            list.add(new TextComponent("Press <Shift> for info").withStyle(ChatFormatting.GRAY));
-        } else {
-            list.add(new TextComponent("To Use:").withStyle(ChatFormatting.YELLOW));
-            list.add(new TextComponent("  Right click on any item with").withStyle(ChatFormatting.GRAY));
-            list.add(new TextComponent("  dye in your inventory with").withStyle(ChatFormatting.GRAY));
-            list.add(new TextComponent("  this item selected.").withStyle(ChatFormatting.GRAY));
-        }
+        components.add(new TranslatableComponent("item.fancydyes.soap.desc").withStyle(ChatFormatting.GRAY));
+
+        components.addAll(TooltipHelper.extended(() -> {
+            List<Component> list = new ArrayList<>();
+            String data = new TranslatableComponent("item.fancydyes.soap.use_info").getString();
+            list.add(new TranslatableComponent("gui.tooltip.to_apply").withStyle(ChatFormatting.YELLOW));
+            list.addAll(TooltipHelper.wrap(data, (c) -> c.withStyle(ChatFormatting.GRAY)));
+            return list;
+        }));
     }
 
     @Override

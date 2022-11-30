@@ -1,0 +1,41 @@
+{
+  "itemGroup.fancydyes.dyes":"Fancy Dyes",
+
+  "item.fancydyes.shimmer_red_dye":"Shimmer Red Dye",
+  "item.fancydyes.shimmer_orange_dye":"Shimmer Orange Dye",
+  "item.fancydyes.shimmer_yellow_dye":"Shimmer Yellow Dye",
+  "item.fancydyes.shimmer_green_dye":"Shimmer Green Dye",
+  "item.fancydyes.shimmer_cyan_dye":"Shimmer Cyan Dye",
+  "item.fancydyes.shimmer_blue_dye":"Shimmer Blue Dye",
+  "item.fancydyes.shimmer_purple_dye":"Shimmer Purple Dye",
+  "item.fancydyes.shimmer_pink_dye":"Shimmer Pink Dye",
+  "item.fancydyes.shimmer_white_dye":"Shimmer White Dye",
+
+  "item.fancydyes.solid_red_dye":"Solid Red Dye",
+  "item.fancydyes.solid_orange_dye":"Solid Orange Dye",
+  "item.fancydyes.solid_yellow_dye":"Solid Yellow Dye",
+  "item.fancydyes.solid_green_dye":"Solid Green Dye",
+  "item.fancydyes.solid_cyan_dye":"Solid Cyan Dye",
+  "item.fancydyes.solid_blue_dye":"Solid Blue Dye",
+  "item.fancydyes.solid_purple_dye":"Solid Purple Dye",
+  "item.fancydyes.solid_pink_dye":"Solid Pink Dye",
+  "item.fancydyes.solid_white_dye":"Solid White Dye",
+  "item.fancydyes.rainbow_dye":"Rainbow Dye",
+  "item.fancydyes.inverted_dye":"Inverted Dye",
+
+  "item.fancydyes.flame_dye":"Flame Dye",
+  "item.fancydyes.flame_dye.desc":"Found in nether fortress chests",
+  "item.fancydyes.aurora_dye":"Aurora Dye",
+  "item.fancydyes.aurora_dye.desc":"Found in end city chests",
+
+  "item.fancydyes.empty_dye_bottle":"Empty Dye Bottle",
+
+  "gui.tooltip.extend": "Press <#keybind> for info",
+  "gui.tooltip.to_apply":"To Apply:",
+  "gui.tooltip.dye": "Dye:",
+  "item.fancydyes.dye.use_info":"Right click on any dyeable item in your inventory with this dye selected.",
+
+  "item.fancydyes.soap":"Soap",
+  "item.fancydyes.soap.desc": "Removes dyes from items",
+  "item.fancydyes.soap.use_info": "Right click on any item with dye in your inventory with this item selected."
+}

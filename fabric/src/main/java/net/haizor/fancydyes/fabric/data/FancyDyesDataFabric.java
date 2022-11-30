@@ -23,7 +23,7 @@ import java.util.Set;
 public class FancyDyesDataFabric implements DataGeneratorEntrypoint {
     @Override
     public void onInitializeDataGenerator(FabricDataGenerator dataGenerator) {
-        dataGenerator.addProvider(FancyDyesData.Language::new);
+//        dataGenerator.addProvider(FancyDyesData.Language::new);
         dataGenerator.addProvider(Models::new);
         dataGenerator.addProvider(Recipes::new);
     }

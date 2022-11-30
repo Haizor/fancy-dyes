@@ -1,6 +1,7 @@
 package net.haizor.fancydyes.data;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import net.haizor.fancydyes.FancyDyes;
 import net.haizor.fancydyes.dyes.StandardDyeColors;
@@ -43,7 +44,7 @@ public class FancyDyesData {
             this.add("item.fancydyes.flame_dye.desc", "Found in nether fortress chests");
             this.add("item.fancydyes.aurora_dye.desc", "Found in end city chests");
 
-            this.add("gui.dye.tooltip.extend", "Press <Shift> for more info");
+            this.add("gui.dye.tooltip.extend", "Press <#keybind> for more info");
             this.add("gui.dye.tooltip.to_apply", "To Apply:");
             this.add("gui.dye.tooltip.apply_instructions", "Right click on any dyeable item in your inventory with this dye selected.");
             this.add("itemGroup.%s.dyes".formatted(FancyDyes.MOD_ID), "Fancy Dyes");
@@ -77,7 +78,7 @@ public class FancyDyesData {
 
             this.generateLanguages();
 
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
             JsonObject langEntryJson = new JsonObject();
 
             for (Map.Entry<String, String> entry : this.languageMap.entrySet()) {

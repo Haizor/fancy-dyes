@@ -34,7 +34,7 @@ public class FancyDyesDataForge {
     private static final RegistryObject<DyeLootModifier.Serializer> DYE_LOOT = GLM.register("dye_loot", DyeLootModifier.Serializer::new);
 
     public static void gatherData(GatherDataEvent event) {
-        event.getGenerator().addProvider(new FancyDyesData.Language(event.getGenerator()));
+//        event.getGenerator().addProvider(new FancyDyesData.Language(event.getGenerator()));
         event.getGenerator().addProvider(new ItemModels(event));
         event.getGenerator().addProvider(new Recipes(event));
         event.getGenerator().addProvider(new LootModifiers(event.getGenerator(), FancyDyes.MOD_ID));

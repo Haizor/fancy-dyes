@@ -1,0 +1,38 @@
+{
+  "itemGroup.fancydyes.dyes":"精致点染",
+
+  "item.fancydyes.shimmer_red_dye":"流光红色染料",
+  "item.fancydyes.shimmer_orange_dye":"流光橙色染料",
+  "item.fancydyes.shimmer_yellow_dye":"流光黄色染料",
+  "item.fancydyes.shimmer_green_dye":"流光绿色染料",
+  "item.fancydyes.shimmer_cyan_dye":"流光青色染料",
+  "item.fancydyes.shimmer_blue_dye":"流光蓝色染料",
+  "item.fancydyes.shimmer_purple_dye":"流光紫色染料",
+  "item.fancydyes.shimmer_pink_dye":"流光粉色染料",
+  "item.fancydyes.shimmer_white_dye":"流光白色染料",
+
+  "item.fancydyes.solid_red_dye":"纯粹红色染料",
+  "item.fancydyes.solid_orange_dye":"纯粹橙色染料",
+  "item.fancydyes.solid_yellow_dye":"纯粹黄色染料",
+  "item.fancydyes.solid_green_dye":"纯粹绿色染料",
+  "item.fancydyes.solid_cyan_dye":"纯粹青色染料",
+  "item.fancydyes.solid_blue_dye":"纯粹蓝色染料",
+  "item.fancydyes.solid_purple_dye":"纯粹紫色染料",
+  "item.fancydyes.solid_pink_dye":"纯粹粉色染料",
+  "item.fancydyes.solid_white_dye":"纯粹白色染料",
+  "item.fancydyes.rainbow_dye":"彩虹染料",
+  "item.fancydyes.inverted_dye":"反色染料",
+
+  "item.fancydyes.flame_dye":"烈火染料",
+  "item.fancydyes.flame_dye.desc":"可在下界要塞中寻得",
+  "item.fancydyes.aurora_dye":"星陨染料",
+  "item.fancydyes.aurora_dye.desc":"可在末地城中寻得",
+
+  "item.fancydyes.empty_dye_bottle":"空染料瓶",
+
+  "gui.tooltip.extend":"按\u003c#keybind\u003e查阅详情",
+  "gui.tooltip.to_apply":"使用方法：",
+  "item.fancydyes.dye.use_info":"左键选择染料，拖动光标，右键将之点染在任意可染色物品上",
+
+  "item.fancydyes.soap":"肥皂"
+}
