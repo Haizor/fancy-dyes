@@ -1,8 +1,10 @@
 package net.haizor.fancydyes.fabric.mixin;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.haizor.fancydyes.DyeRenderTypes;
+import net.haizor.fancydyes.DyeRenderer;
 import net.haizor.fancydyes.dyes.FancyDye;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -57,11 +59,13 @@ abstract class MixinHumanoidArmorLayer<T extends LivingEntity, M extends Humanoi
         float r = c.getRed() / 255f;
         float g = c.getGreen() / 255f;
         float b = c.getBlue() / 255f;
-        float a = c.getAlpha() / 255f;
+        float a = DyeRenderer.getAlpha(armorItem.getSlot());
         humanoidModel.renderToBuffer(poseStack, dyeConsumer, i, OverlayTexture.NO_OVERLAY, r, g, b, a);
         if (dye.getType().equals(FancyDye.Type.OVERLAY)) {
             VertexConsumer baseConsumer = multiBufferSource.getBuffer(RenderType.armorCutoutNoCull(loc));
             humanoidModel.renderToBuffer(poseStack, baseConsumer, i, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f);
         }
     }
+
+
 }

@@ -199,18 +199,19 @@ public class DyeRenderTypes {
         public static ShaderInstance OVERLAY_TEXTURE;
         public static ShaderStateShard OVERLAY_TEXTURE_SHARD = new ShaderStateShard(() -> OVERLAY_TEXTURE);
 
+        public static ShaderInstance OVERLAY_TEXTURE_LIT;
+        public static ShaderStateShard OVERLAY_TEXTURE_LIT_SHARD = new ShaderStateShard(() -> OVERLAY_TEXTURE_LIT);
+
         public static ShaderInstance INVERT;
         public static ShaderStateShard INVERT_SHARD = new ShaderStateShard(() -> INVERT);
 
-        public static ShaderInstance OVERLAY_TEXTURE_LIT;
-        public static ShaderStateShard OVERLAY_TEXTURE_LIT_SHARD = new ShaderStateShard(() -> OVERLAY_TEXTURE_LIT);
 
         public static void init() {
             ClientReloadShadersEvent.EVENT.register((manager, sink) -> {
                 try {
                     sink.registerShader(new ShaderInstance(manager, "dyes/overlay_texture", DefaultVertexFormat.POSITION_COLOR_TEX), (s) -> OVERLAY_TEXTURE = s);
-                    sink.registerShader(new ShaderInstance(manager, "dyes/invert", DefaultVertexFormat.NEW_ENTITY), (s) -> INVERT = s);
                     sink.registerShader(new ShaderInstance(manager, "dyes/overlay_texture_lit", DefaultVertexFormat.NEW_ENTITY), (s) -> OVERLAY_TEXTURE_LIT = s);
+                    sink.registerShader(new ShaderInstance(manager, "dyes/invert", DefaultVertexFormat.NEW_ENTITY), (s) -> INVERT = s);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

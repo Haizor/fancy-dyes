@@ -3,6 +3,7 @@ package net.haizor.fancydyes.forge.mixin;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.haizor.fancydyes.DyeRenderTypes;
+import net.haizor.fancydyes.DyeRenderer;
 import net.haizor.fancydyes.dyes.FancyDye;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
@@ -38,7 +39,7 @@ abstract class MixinHumanoidArmorLayer<T extends LivingEntity, M extends Humanoi
     private void renderArmorPiece(PoseStack poseStack, MultiBufferSource multiBufferSource, T livingEntity, EquipmentSlot equipmentSlot, int i, A humanoidModel, CallbackInfo ci, ItemStack stack, ArmorItem armorItem, Model model) {
         FancyDye dye = FancyDye.getDye(stack);
         if (dye == null) return;
-        this.renderModel(poseStack, multiBufferSource, i, model, this.getArmorResource(livingEntity, stack, equipmentSlot, null), dye);
+        this.renderModel(poseStack, multiBufferSource, i, model, this.getArmorResource(livingEntity, stack, equipmentSlot, null), dye, equipmentSlot);
         if (stack.getItem() instanceof DyeableArmorItem) {
             renderModel(poseStack, multiBufferSource, i, false, model, 1f, 1f, 1f, this.getArmorResource(livingEntity, stack, equipmentSlot, "overlay"));
         }
@@ -47,13 +48,13 @@ abstract class MixinHumanoidArmorLayer<T extends LivingEntity, M extends Humanoi
         ci.cancel();
     }
 
-    private void renderModel(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, Model model, ResourceLocation loc, FancyDye dye) {
+    private void renderModel(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, Model model, ResourceLocation loc, FancyDye dye, EquipmentSlot slot) {
         VertexConsumer dyeConsumer = multiBufferSource.getBuffer(DyeRenderTypes.get(dye.getArmorRenderType(), loc));
         Color c = dye.getColor();
         float r = c.getRed() / 255f;
         float g = c.getGreen() / 255f;
         float b = c.getBlue() / 255f;
-        float a = c.getAlpha() / 255f;
+        float a = DyeRenderer.getAlpha(slot);
         model.renderToBuffer(poseStack, dyeConsumer, i, OverlayTexture.NO_OVERLAY, r, g, b, a);
         if (dye.getType().equals(FancyDye.Type.OVERLAY)) {
             VertexConsumer baseConsumer = multiBufferSource.getBuffer(RenderType.armorCutoutNoCull(loc));

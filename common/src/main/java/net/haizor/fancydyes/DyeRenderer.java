@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 
 import java.awt.*;
@@ -50,6 +51,17 @@ public class DyeRenderer {
 
         random.setSeed(42L);
         renderQuadList(poseStack, vertexConsumer, bakedModel.getQuads(null, null, random), itemStack, i, j, dye);
+    }
+
+    //Alpha is used to determine equipment slot in shaders for proper tiling
+    public static float getAlpha(EquipmentSlot slot) {
+        return switch (slot) {
+            case HEAD -> 4.0f;
+            case CHEST -> 3.0f;
+            case LEGS -> 2.0f;
+            case FEET -> 1.0f;
+            default -> 2.5f;
+        };
     }
 
     private static void renderDye(ItemStack itemStack, int i, int j, boolean bl, PoseStack poseStack, MultiBufferSource source, BakedModel model, FancyDye dye) {
