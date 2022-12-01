@@ -24,15 +24,17 @@
   "item.fancydyes.inverted_dye":"反色染料",
 
   "item.fancydyes.flame_dye":"烈火染料",
-  "item.fancydyes.flame_dye.desc":"可在下界要塞中寻得",
+  "item.fancydyes.flame_dye.desc":"可在下界要塞中找到",
   "item.fancydyes.aurora_dye":"星陨染料",
-  "item.fancydyes.aurora_dye.desc":"可在末地城中寻得",
+  "item.fancydyes.aurora_dye.desc":"可在末地城中找到",
 
   "item.fancydyes.empty_dye_bottle":"空染料瓶",
-
-  "gui.tooltip.extend":"按\u003c#keybind\u003e查阅详情",
+  "gui.tooltip.extend": "按<#keybind>查阅详情",
   "gui.tooltip.to_apply":"使用方法：",
+  "gui.tooltip.dye": "染料：",
   "item.fancydyes.dye.use_info":"左键选择染料，拖动光标，右键将之点染在任意可染色物品上",
 
-  "item.fancydyes.soap":"肥皂"
+  "item.fancydyes.soap":"肥皂",
+  "item.fancydyes.soap.desc": "洗除附着于物品上的的染料",
+  "item.fancydyes.soap.use_info": "左键选择染料，拖动光标，右键应用于已染色物品上"
 }
