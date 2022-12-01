@@ -17,7 +17,6 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 
 public record ClientDyeTooltip(DyeTooltip tooltip) implements ClientTooltipComponent {
@@ -32,7 +31,7 @@ public record ClientDyeTooltip(DyeTooltip tooltip) implements ClientTooltipCompo
     }
 
     private Component getText() {
-        return new TranslatableComponent("gui.tooltip.dye").append("    ").append(FancyDye.getItem(tooltip.dye()).getDescription()).withStyle(ChatFormatting.GRAY);
+        return Component.translatable("gui.tooltip.dye").append("    ").append(FancyDye.getItem(tooltip.dye()).getDescription()).withStyle(ChatFormatting.GRAY);
     }
 
     @Override
@@ -43,7 +42,7 @@ public record ClientDyeTooltip(DyeTooltip tooltip) implements ClientTooltipCompo
     @Override
     public void renderImage(Font font, int x, int y, PoseStack poseStack, ItemRenderer itemRenderer, int k) {
         PoseStack stack = new PoseStack();
-        int l = font.width(new TranslatableComponent("gui.tooltip.dye").append(" "));
+        int l = font.width(Component.translatable("gui.tooltip.dye").append(" "));
         stack.translate(-0.25f, 0.25f, 0f);
         stack.scale(0.6f, 0.6f, 1f);
 

@@ -6,7 +6,6 @@ import net.haizor.fancydyes.tooltip.TooltipHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickAction;
@@ -37,8 +36,8 @@ public class FancyDyeItem extends Item {
 
         tooltipComponents.addAll(TooltipHelper.extended(() -> {
             List<Component> list = new ArrayList<>();
-            String data = new TranslatableComponent("item.fancydyes.dye.use_info").getString();
-            list.add(new TranslatableComponent("gui.tooltip.to_apply").withStyle(ChatFormatting.YELLOW));
+            String data = Component.translatable("item.fancydyes.dye.use_info").getString();
+            list.add(Component.translatable("gui.tooltip.to_apply").withStyle(ChatFormatting.YELLOW));
             list.addAll(TooltipHelper.wrap(data, (c) -> c.withStyle(ChatFormatting.GRAY)));
             return list;
         }));

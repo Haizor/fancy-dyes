@@ -16,11 +16,11 @@ public class TooltipHelper {
         Minecraft mc = Minecraft.getInstance();
         if (!InputConstants.isKeyDown(mc.getWindow().getWindow(), ((KeyMappingAccessor)mc.options.keyShift).getKey().getValue())) {
             List<Component> list = new ArrayList<>();
-            String[] split = new TranslatableComponent("gui.tooltip.extend").getString().split("(#keybind)");
+            String[] split = Component.translatable("gui.tooltip.extend").getString().split("(#keybind)");
             list.add(
-                new TextComponent(split[0]).withStyle(ChatFormatting.GRAY).append(
-                new KeybindComponent("key.sneak").withStyle(ChatFormatting.YELLOW).append(
-                new TranslatableComponent(split.length >= 2 ? split[1] : "").withStyle(ChatFormatting.GRAY)
+                Component.literal(split[0]).withStyle(ChatFormatting.GRAY).append(
+                Component.keybind("key.sneak").withStyle(ChatFormatting.YELLOW).append(
+                Component.translatable(split.length >= 2 ? split[1] : "").withStyle(ChatFormatting.GRAY)
             )));
             return list;
         } else {
@@ -46,7 +46,7 @@ public class TooltipHelper {
                 charCount += curr.length();
             }
             l -= charCount;
-            TextComponent component = new TextComponent("  %s".formatted(line));
+            MutableComponent component = Component.literal("  %s".formatted(line));
             formatter.accept(component);
             list.add(component);
         }

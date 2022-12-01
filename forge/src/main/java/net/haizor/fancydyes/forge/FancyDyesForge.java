@@ -13,7 +13,7 @@ import net.haizor.fancydyes.tooltip.DyeTooltip;
 import net.haizor.fancydyes.tooltip.DyeTutorialTooltip;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -22,6 +22,7 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 
 @Mod(FancyDyes.MOD_ID)
 public class FancyDyesForge {
@@ -36,14 +37,17 @@ public class FancyDyesForge {
         FancyDyesDataForge.GLM.register(modEventBus);
 
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> FancyDyesClient::init);
+        if (FMLEnvironment.dist.isClient()) {
+            modEventBus.register(ModBusEvents.class);
+        }
     }
 
 
     public static class ModBusEvents {
         @SubscribeEvent
-        public static void clientSetup(FMLClientSetupEvent event){
-            MinecraftForgeClient.registerTooltipComponentFactory(DyeTooltip.class, ClientDyeTooltip::new);
-            MinecraftForgeClient.registerTooltipComponentFactory(DyeTutorialTooltip.class, ClientDyeTutorialTooltip::new);
+        public static void registerTooltips(RegisterClientTooltipComponentFactoriesEvent event) {
+            event.register(DyeTooltip.class, ClientDyeTooltip::new);
+            event.register(DyeTutorialTooltip.class, ClientDyeTutorialTooltip::new);
         }
     }
 

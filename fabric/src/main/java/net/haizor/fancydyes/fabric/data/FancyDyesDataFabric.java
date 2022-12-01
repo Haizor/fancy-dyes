@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.resource.conditions.v1.ConditionJsonProvider;
 import net.fabricmc.fabric.impl.datagen.FabricDataGenHelper;
 import net.haizor.fancydyes.FancyDyes;
 import net.haizor.fancydyes.data.FancyDyesData;
+import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.HashCache;
 import net.minecraft.data.models.BlockModelGenerators;
@@ -53,7 +54,7 @@ public class FancyDyesDataFabric implements DataGeneratorEntrypoint {
         }
 
         @Override
-        public void run(HashCache cache) {
+        public void run(CachedOutput output) {
             Path path = this.generator.getOutputFolder();
             Set<ResourceLocation> generatedRecipes = Sets.newHashSet();
             FancyDyesData.Recipes.generateRecipes(provider -> {
@@ -67,12 +68,12 @@ public class FancyDyesDataFabric implements DataGeneratorEntrypoint {
                 ConditionJsonProvider[] conditions = FabricDataGenHelper.consumeConditions(provider);
                 ConditionJsonProvider.write(recipeJson, conditions);
 
-                saveRecipe(cache, recipeJson, path.resolve("data/" + identifier.getNamespace() + "/recipes/" + identifier.getPath() + ".json"));
+                saveRecipe(output, recipeJson, path.resolve("data/" + identifier.getNamespace() + "/recipes/" + identifier.getPath() + ".json"));
                 JsonObject advancementJson = provider.serializeAdvancement();
 
                 if (advancementJson != null) {
                     ConditionJsonProvider.write(advancementJson, conditions);
-                    saveAdvancement(cache, advancementJson, path.resolve("data/" + identifier.getNamespace() + "/advancements/" + provider.getAdvancementId().getPath() + ".json"));
+                    saveAdvancement(output, advancementJson, path.resolve("data/" + identifier.getNamespace() + "/advancements/" + provider.getAdvancementId().getPath() + ".json"));
                 }
             });
         }

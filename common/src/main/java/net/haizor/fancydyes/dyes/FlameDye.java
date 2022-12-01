@@ -2,7 +2,6 @@ package net.haizor.fancydyes.dyes;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
@@ -36,6 +35,6 @@ public class FlameDye implements FancyDye {
 
     @Override
     public @Nullable Component tooltip() {
-        return new TranslatableComponent("item.fancydyes.flame_dye.desc").withStyle(ChatFormatting.GRAY);
+        return Component.translatable("item.fancydyes.flame_dye.desc").withStyle(ChatFormatting.GRAY);
     }
 }

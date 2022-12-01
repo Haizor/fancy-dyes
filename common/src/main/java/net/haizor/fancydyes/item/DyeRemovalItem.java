@@ -4,7 +4,6 @@ import net.haizor.fancydyes.dyes.FancyDye;
 import net.haizor.fancydyes.tooltip.TooltipHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickAction;
@@ -26,12 +25,12 @@ public class DyeRemovalItem extends Item {
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> components, TooltipFlag tooltipFlag) {
         if (level == null || !level.isClientSide) return;
-        components.add(new TranslatableComponent("item.fancydyes.soap.desc").withStyle(ChatFormatting.GRAY));
+        components.add(Component.translatable("item.fancydyes.soap.desc").withStyle(ChatFormatting.GRAY));
 
         components.addAll(TooltipHelper.extended(() -> {
             List<Component> list = new ArrayList<>();
-            String data = new TranslatableComponent("item.fancydyes.soap.use_info").getString();
-            list.add(new TranslatableComponent("gui.tooltip.to_apply").withStyle(ChatFormatting.YELLOW));
+            String data = Component.translatable("item.fancydyes.soap.use_info").getString();
+            list.add(Component.translatable("gui.tooltip.to_apply").withStyle(ChatFormatting.YELLOW));
             list.addAll(TooltipHelper.wrap(data, (c) -> c.withStyle(ChatFormatting.GRAY)));
             return list;
         }));

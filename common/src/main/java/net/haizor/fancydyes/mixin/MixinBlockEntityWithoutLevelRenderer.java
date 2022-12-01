@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.Material;
+import net.minecraft.core.Holder;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -52,7 +53,7 @@ abstract class MixinBlockEntityWithoutLevelRenderer {
             this.shieldModel.handle().render(poseStack, baseConsumer, i, j, 1.0f, 1.0f, 1.0f, 1.0f);
         }
         if (bl) {
-            List<Pair<BannerPattern, DyeColor>> list = BannerBlockEntity.createPatterns(ShieldItem.getColor(itemStack), BannerBlockEntity.getItemPatterns(itemStack));
+            List<Pair<Holder<BannerPattern>, DyeColor>> list = BannerBlockEntity.createPatterns(ShieldItem.getColor(itemStack), BannerBlockEntity.getItemPatterns(itemStack));
             this.shieldModel.plate().render(poseStack, dyeConsumer, i, j, r, g, b, 1.0F);
             if (dye.getType().equals(FancyDye.Type.OVERLAY)) {
                 this.shieldModel.plate().render(poseStack, baseConsumer, i, j, 1.0f, 1.0f, 1.0f, 1.0f);
@@ -68,15 +69,18 @@ abstract class MixinBlockEntityWithoutLevelRenderer {
         ci.cancel();
     }
 
-    private static void renderPatterns(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int j, ModelPart modelPart, Material material, boolean bl, List<Pair<BannerPattern, DyeColor>> list, boolean bl2) {
+    private static void renderPatterns(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int j, ModelPart modelPart, Material material, boolean bl, List<Pair<Holder<BannerPattern>, DyeColor>> list, boolean bl2) {
 
         for(int k = 0; k < 17 && k < list.size(); ++k) {
-            Pair<BannerPattern, DyeColor> pair = list.get(k);
+            Pair<Holder<BannerPattern>, DyeColor> pair = list.get(k);
             float[] fs = pair.getSecond().getTextureDiffuseColors();
-            BannerPattern bannerPattern = pair.getFirst();
-            Material material2 = bl ? Sheets.getBannerMaterial(bannerPattern) : Sheets.getShieldMaterial(bannerPattern);
+            Holder<BannerPattern> bannerPattern = pair.getFirst();
+
+            Material material2 = bl ? Sheets.getBannerMaterial(bannerPattern.unwrapKey().get()) : Sheets.getShieldMaterial(bannerPattern.unwrapKey().get());
             modelPart.render(poseStack, material2.buffer(multiBufferSource, RenderType::entityNoOutline), i, j, fs[0], fs[1], fs[2], 1.0F);
         }
 
     }
+
+
 }

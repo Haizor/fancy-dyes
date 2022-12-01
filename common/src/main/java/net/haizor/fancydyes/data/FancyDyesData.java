@@ -7,6 +7,7 @@ import net.haizor.fancydyes.FancyDyes;
 import net.haizor.fancydyes.dyes.StandardDyeColors;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.Registry;
+import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.HashCache;
@@ -73,19 +74,18 @@ public class FancyDyesData {
         }
 
         @Override
-        public void run(@NotNull HashCache hashCache) throws IOException {
+        public void run(@NotNull CachedOutput output) throws IOException {
             this.languageMap = new HashMap<>();
 
             this.generateLanguages();
 
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
             JsonObject langEntryJson = new JsonObject();
 
             for (Map.Entry<String, String> entry : this.languageMap.entrySet()) {
                 langEntryJson.addProperty(entry.getKey(), entry.getValue());
             }
 
-            DataProvider.save(gson, hashCache, langEntryJson, getLangFilePath(this.language));
+            DataProvider.saveStable(output, langEntryJson, getLangFilePath(this.language));
         }
 
         private Path getLangFilePath(String code) {

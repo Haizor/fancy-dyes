@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 
@@ -42,7 +43,7 @@ public class DyeRenderer {
     }
 
     public static void renderDyed(BakedModel bakedModel, ItemStack itemStack, int i, int j, PoseStack poseStack, VertexConsumer vertexConsumer, FancyDye dye) {
-        Random random = new Random();
+        RandomSource random = RandomSource.create();
 
         for (Direction direction : Direction.values()) {
             random.setSeed(42L);
@@ -65,7 +66,7 @@ public class DyeRenderer {
     }
 
     private static void renderDye(ItemStack itemStack, int i, int j, boolean bl, PoseStack poseStack, MultiBufferSource source, BakedModel model, FancyDye dye) {
-        Random random = new Random();
+        RandomSource random = RandomSource.create();
         VertexConsumer baseConsumer = source.getBuffer(ItemBlockRenderTypes.getRenderType(itemStack, bl));
         VertexConsumer dyeConsumer = source.getBuffer(DyeRenderTypes.get(dye.getItemRenderType(), TextureAtlas.LOCATION_BLOCKS));
 
