@@ -29,11 +29,11 @@ public class FancyDyes {
     public static final BiMap<String, FancyDye> DYES = HashBiMap.create();
     
     public static void init() {
-        for (StandardDyeColors.DyeColor color : StandardDyeColors.DYE_COLORS) {
+        for (StandardDyeColors.FancyDyeColor color : StandardDyeColors.DYE_COLORS) {
             DYES.put("solid_" + color.string(), new SolidDye(color.color()));
         }
 
-        for (StandardDyeColors.DyeColor color : StandardDyeColors.DYE_COLORS) {
+        for (StandardDyeColors.FancyDyeColor color : StandardDyeColors.DYE_COLORS) {
             DYES.put("shimmer_" + color.string(), new ShimmerDye(color.color()));
         }
 

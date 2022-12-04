@@ -24,7 +24,7 @@ public interface FancyDye {
     default @Nullable Component tooltip() { return null; }
 
     static FancyDye getDye(ItemStack stack) {
-        return FancyDyes.DYES.get(stack.getOrCreateTag().getString("dye"));
+        return stack.hasTag() ? FancyDyes.DYES.get(stack.getTag().getString("dye")) : null;
     }
 
     static Item getItem(FancyDye dye) {

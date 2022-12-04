@@ -102,7 +102,7 @@ public class FancyDyesData {
         public static void generateRecipes(Consumer<FinishedRecipe> recipes) {
             Item emptyDyeBottle = FancyDyes.EMPTY_DYE_BOTTLE.get();
 
-            for (StandardDyeColors.DyeColor color : StandardDyeColors.DYE_COLORS) {
+            for (StandardDyeColors.FancyDyeColor color : StandardDyeColors.DYE_COLORS) {
                 ShapelessRecipeBuilder.shapeless(Registry.ITEM.get(new ResourceLocation(FancyDyes.MOD_ID, "solid_" + color.string() + "_dye")))
                         .requires(Registry.ITEM.get(new ResourceLocation("minecraft", color.string() + "_dye")))
                         .requires(emptyDyeBottle)

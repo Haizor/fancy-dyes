@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:brown_dye"
+    },
+    {
+      "item": "fancydyes:empty_dye_bottle"
+    }
+  ],
+  "result": {
+    "item": "fancydyes:solid_brown_dye"
+  }
+}
