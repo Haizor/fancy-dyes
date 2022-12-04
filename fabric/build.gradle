@@ -1,8 +1,9 @@
 plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
+    id "me.shedaniel.unified-publishing" version "0.1.+"
 }
 
-archivesBaseName = rootProject.archives_base_name + "-fabric"
+archivesBaseName = rootProject.archives_base_name + "-fabric-"+ project.minecraft_version
 
 architectury {
     platformSetupLoomIde()
@@ -87,6 +88,36 @@ sourceSets {
 components.java {
     withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
         skip()
+    }
+}
+
+unifiedPublishing {
+    project {
+        displayName = "[Fabric %s] %s".formatted(property("minecraft_version"), property("mod_version"))
+        version = "%s+%s+fabric".formatted(property("mod_version"), property("minecraft_version"))
+        changelog = rootProject.file("CHANGELOG.md").text
+        releaseType = "release"
+        gameVersions = [property("minecraft_version")]
+        gameLoaders = ["fabric"]
+
+        mainPublication tasks.remapJar
+
+        relations {
+            depends {
+                curseforge = "architectury-api"
+                modrinth = "architectury-api"
+            }
+        }
+
+        curseforge {
+            token = System.getenv("CURSEFORGE_TOKEN")
+            id = "715108" // Required, must be a string, ID of CurseForge project
+        }
+
+        modrinth {
+            token = System.getenv("MODRINTH_TOKEN")
+            id = "weDXQCzq" // Required, must be a string, ID of Modrinth project
+        }
     }
 }
 
