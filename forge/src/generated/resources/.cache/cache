@@ -1,6 +1,6 @@
 774ef847cdccf89a7976922d0ec2b1cb7b090a3d assets/fancydyes/models/item/aurora_dye.json
+774ef847cdccf89a7976922d0ec2b1cb7b090a3d assets/fancydyes/models/item/enby_dye.json
 774ef847cdccf89a7976922d0ec2b1cb7b090a3d assets/fancydyes/models/item/flame_dye.json
-774ef847cdccf89a7976922d0ec2b1cb7b090a3d assets/fancydyes/models/item/inverted_dye.json
 774ef847cdccf89a7976922d0ec2b1cb7b090a3d assets/fancydyes/models/item/rainbow_dye.json
 774ef847cdccf89a7976922d0ec2b1cb7b090a3d assets/fancydyes/models/item/shimmer_black_dye.json
 774ef847cdccf89a7976922d0ec2b1cb7b090a3d assets/fancydyes/models/item/shimmer_blue_dye.json
@@ -34,6 +34,7 @@
 774ef847cdccf89a7976922d0ec2b1cb7b090a3d assets/fancydyes/models/item/solid_red_dye.json
 774ef847cdccf89a7976922d0ec2b1cb7b090a3d assets/fancydyes/models/item/solid_white_dye.json
 774ef847cdccf89a7976922d0ec2b1cb7b090a3d assets/fancydyes/models/item/solid_yellow_dye.json
+774ef847cdccf89a7976922d0ec2b1cb7b090a3d assets/fancydyes/models/item/trans_dye.json
 1b93ab80e9d74d5840306c6266c0dadee951cd82 data/fancydyes/advancements/recipes/fancydyes.dyes/empty_dye_bottle.json
 7db1e637da35090bd4bda62e9627de3d670f898b data/fancydyes/advancements/recipes/fancydyes.dyes/shimmer_black_dye.json
 6a6485b8db3012415541093e11f76a3aad52423b data/fancydyes/advancements/recipes/fancydyes.dyes/shimmer_black_dye_from_solid.json

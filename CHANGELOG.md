@@ -1,2 +1,3 @@
-* Fixed dyable items having empty tags created on them
-* Added dyes colors for the rest of the vanilla minecraft dyes
+* Added two new dyes
+* Fix fabric compatibility with modded armors
+* Updated chinese translation done by Rad233

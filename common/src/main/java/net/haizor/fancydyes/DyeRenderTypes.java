@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderType.CompositeState.CompositeStateBuilder;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,66 +28,68 @@ public class DyeRenderTypes {
     public static final Map<String, RenderTypeSupplier> TYPES = new HashMap<>();
     private static final List<RenderType> SOLID_TYPES = new ArrayList<>();
 
-    public static final RenderTypeSupplier SOLID_ARMOR = armor("solid_armor", DefaultVertexFormat.NEW_ENTITY, b -> b
-            .setShaderState(Shaders.OVERLAY_TEXTURE_LIT_SHARD)
-            .setTextureState(new TextureStateShard(new ResourceLocation(FancyDyes.MOD_ID, "textures/dye_scrolls/solid.png"), true, false))
+    public static final Type SOLID = createType(
+        "solid",
+        Shaders.OVERLAY_TEXTURE_LIT_SHARD,
+        texture("textures/dye_scrolls/solid.png"),
+        null,
+        null
     );
 
-    public static final RenderTypeSupplier SOLID_ITEM = item("solid_item", DefaultVertexFormat.NEW_ENTITY, b -> b
-            .setShaderState(Shaders.OVERLAY_TEXTURE_LIT_SHARD)
-            .setTextureState(new TextureStateShard(new ResourceLocation(FancyDyes.MOD_ID, "textures/dye_scrolls/solid.png"), true, false))
+    public static final Type SHIMMER = createType(
+        "shimmer",
+        Shaders.OVERLAY_TEXTURE_SHARD,
+        texture("textures/dye_scrolls/shimmer.png"),
+        ENTITY_GLINT_TEXTURING,
+        GLINT_TEXTURING
     );
 
-    public static final RenderTypeSupplier SHIMMER_ARMOR = armor("shimmer_armor", DefaultVertexFormat.NEW_ENTITY, b -> b
-            .setShaderState(Shaders.OVERLAY_TEXTURE_SHARD)
-            .setTexturingState(ENTITY_GLINT_TEXTURING)
-            .setTextureState(new TextureStateShard(new ResourceLocation(FancyDyes.MOD_ID, "textures/dye_scrolls/shimmer.png"), true, false))
+    public static final Type RAINBOW = createType(
+        "rainbow",
+        Shaders.OVERLAY_TEXTURE_SHARD,
+        texture("textures/dye_scrolls/gradient.png"),
+        verticalScroll(0.16f),
+        verticalScroll(8f)
     );
 
-    public static final RenderTypeSupplier SHIMMER_ITEM = item("shimmer_item", DefaultVertexFormat.NEW_ENTITY, b -> b
-            .setShaderState(Shaders.OVERLAY_TEXTURE_SHARD)
-            .setTexturingState(GLINT_TEXTURING)
-            .setTextureState(new TextureStateShard(new ResourceLocation(FancyDyes.MOD_ID, "textures/dye_scrolls/shimmer.png"), true, false))
+    public static final Type AURORA = createType(
+        "aurora",
+        Shaders.OVERLAY_TEXTURE_SHARD,
+        texture("textures/dye_scrolls/aurora.png"),
+        angledScroll(0.6f, 80f),
+        angledScroll(8f, 80f)
     );
 
-    public static final RenderTypeSupplier INVERT_ARMOR = baseArmor("invert_armor", DefaultVertexFormat.NEW_ENTITY, b -> b
-            .setShaderState(Shaders.INVERT_SHARD)
+    public static final Type FLAME = createType(
+        "flame",
+        Shaders.OVERLAY_TEXTURE_SHARD,
+        texture("textures/dye_scrolls/flame.png"),
+        verticalScroll(0.32f),
+        verticalScroll(8f)
     );
 
-    public static final RenderTypeSupplier RAINBOW_ARMOR = armor("rainbow_armor", DefaultVertexFormat.NEW_ENTITY, b -> b
-            .setShaderState(Shaders.OVERLAY_TEXTURE_SHARD)
-            .setTexturingState(verticalScroll(0.16f))
-            .setTextureState(new TextureStateShard(new ResourceLocation(FancyDyes.MOD_ID, "textures/dye_scrolls/gradient.png"), true, false))
+    public static final Type GLOWSQUID = createType(
+        "glowsquid",
+        Shaders.OVERLAY_TEXTURE_SHARD,
+        texture("textures/dye_scrolls/glowsquid.png"),
+        verticalScroll(0.32f),
+        verticalScroll(8f)
     );
 
-    public static final RenderTypeSupplier RAINBOW_ITEM = item("rainbow_item", DefaultVertexFormat.NEW_ENTITY, b -> b
-            .setShaderState(Shaders.OVERLAY_TEXTURE_SHARD)
-            .setTexturingState(verticalScroll(8f))
-            .setTextureState(new TextureStateShard(new ResourceLocation(FancyDyes.MOD_ID, "textures/dye_scrolls/gradient.png"), true, false))
+    public static final Type TRANS = createType(
+            "trans",
+            Shaders.OVERLAY_TEXTURE_SHARD,
+            texture("textures/dye_scrolls/trans.png"),
+            verticalScroll(0.16f),
+            verticalScroll(8f)
     );
 
-    public static final RenderTypeSupplier AURORA_ARMOR = armor("aurora_armor", DefaultVertexFormat.NEW_ENTITY, b -> b
-            .setShaderState(Shaders.OVERLAY_TEXTURE_SHARD)
-            .setTexturingState(angledScroll(0.6f, 80f))
-            .setTextureState(new TextureStateShard(new ResourceLocation(FancyDyes.MOD_ID, "textures/dye_scrolls/aurora.png"), true, false))
-    );
-
-    public static final RenderTypeSupplier AURORA_ITEM = item("aurora_item", DefaultVertexFormat.NEW_ENTITY, b -> b
-            .setShaderState(Shaders.OVERLAY_TEXTURE_SHARD)
-            .setTexturingState(angledScroll(8f, 80f))
-            .setTextureState(new TextureStateShard(new ResourceLocation(FancyDyes.MOD_ID, "textures/dye_scrolls/aurora.png"), true, false))
-    );
-
-    public static final RenderTypeSupplier FLAME_ARMOR = armor("flame_armor", DefaultVertexFormat.NEW_ENTITY, b -> b
-            .setShaderState(Shaders.OVERLAY_TEXTURE_SHARD)
-            .setTexturingState(verticalScroll(0.32f))
-            .setTextureState(new TextureStateShard(new ResourceLocation(FancyDyes.MOD_ID, "textures/dye_scrolls/flame.png"), true, false))
-    );
-
-    public static final RenderTypeSupplier FLAME_ITEM = item("flame_item", DefaultVertexFormat.NEW_ENTITY, b -> b
-            .setShaderState(Shaders.OVERLAY_TEXTURE_SHARD)
-            .setTexturingState(verticalScroll(8f))
-            .setTextureState(new TextureStateShard(new ResourceLocation(FancyDyes.MOD_ID, "textures/dye_scrolls/flame.png"), true, false))
+    public static final Type ENBY = createType(
+            "enby",
+            Shaders.OVERLAY_TEXTURE_SHARD,
+            texture("textures/dye_scrolls/enby.png"),
+            verticalScroll(0.16f),
+            verticalScroll(8f)
     );
 
     public static void init() {
@@ -96,6 +99,26 @@ public class DyeRenderTypes {
         for (RenderType type : SOLID_TYPES) {
             map.put(type, new BufferBuilder(type.bufferSize()));
         }
+    }
+
+    public static Type createType(String name, ShaderStateShard shader, TextureStateShard texture, @Nullable TexturingStateShard armor, @Nullable TexturingStateShard item) {
+        RenderTypeSupplier armorType = armor(name + "_armor", DefaultVertexFormat.NEW_ENTITY, b -> b
+            .setShaderState(shader)
+            .setTexturingState(armor != null ? armor : DEFAULT_TEXTURING)
+            .setTextureState(texture)
+        );
+
+        RenderTypeSupplier itemType = item(name + "_item", DefaultVertexFormat.NEW_ENTITY, b -> b
+            .setShaderState(shader)
+            .setTexturingState(item != null ? item : DEFAULT_TEXTURING)
+            .setTextureState(texture)
+        );
+
+        return new Type(armorType, itemType);
+    }
+
+    public static TextureStateShard texture(String path) {
+        return new TextureStateShard(new ResourceLocation(FancyDyes.MOD_ID, path), true, false);
     }
 
     public static RenderTypeSupplier armor(String id, VertexFormat format, Consumer<CompositeStateBuilder> f) {
@@ -194,6 +217,8 @@ public class DyeRenderTypes {
     public interface RenderTypeSupplier {
         RenderType supply(ResourceLocation location);
     }
+
+    public record Type(RenderTypeSupplier armor, RenderTypeSupplier item) {}
 
     public static class Shaders {
         public static ShaderInstance OVERLAY_TEXTURE;

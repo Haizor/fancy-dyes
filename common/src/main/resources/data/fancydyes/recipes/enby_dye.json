@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "fancydyes:shimmer_yellow_dye"
+    },
+    {
+      "item": "fancydyes:shimmer_white_dye"
+    },
+    {
+      "item": "fancydyes:shimmer_purple_dye"
+    },
+    {
+      "item": "fancydyes:shimmer_black_dye"
+    }
+  ],
+  "result": {
+    "item": "fancydyes:enby_dye",
+    "count": 1
+  }
+}
