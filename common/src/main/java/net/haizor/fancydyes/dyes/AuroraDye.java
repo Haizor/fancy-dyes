@@ -10,23 +10,12 @@ import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
 
-public class AuroraDye implements FancyDye {
+public class AuroraDye extends OverlayDye {
     public static final ResourceLocation LOOT_TABLE = new ResourceLocation("chests/end_city_treasure");
     public static final LootItemCondition LOOT_CONDITION = LootItemRandomChanceCondition.randomChance(0.2f).build();
 
-    @Override
-    public String getArmorRenderType() {
-        return "aurora_armor";
-    }
-
-    @Override
-    public String getItemRenderType() {
-        return "aurora_item";
-    }
-
-    @Override
-    public Color getColor() {
-        return Color.WHITE;
+    public AuroraDye() {
+        super("aurora");
     }
 
     @Override

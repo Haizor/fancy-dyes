@@ -41,7 +41,6 @@ dependencies {
     modRuntimeOnly "curse.maven:alloygery-573592:4406841"
     modRuntimeOnly "maven.modrinth:armor-render-lib:0.1.3"
 
-
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
 }

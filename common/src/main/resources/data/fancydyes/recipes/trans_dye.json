@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "fancydyes:shimmer_pink_dye"
+    },
+    {
+      "item": "fancydyes:shimmer_white_dye"
+    },
+    {
+      "item": "fancydyes:shimmer_light_blue_dye"
+    }
+  ],
+  "result": {
+    "item": "fancydyes:trans_dye",
+    "count": 1
+  }
+}
