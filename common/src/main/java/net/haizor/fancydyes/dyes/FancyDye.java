@@ -46,6 +46,7 @@ public interface FancyDye {
     TagKey<Item> DYEABLE = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(FancyDyes.MOD_ID, "dyeable"));
     TagKey<Item> DYEABLE_BLACKLIST = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(FancyDyes.MOD_ID, "dyeable_blacklist"));
 
+    //TODO: Remove this because fabric rendering api makes base impossible
     enum Type {
         BASE,
         OVERLAY

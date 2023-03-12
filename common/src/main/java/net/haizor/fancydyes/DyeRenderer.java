@@ -4,11 +4,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.haizor.fancydyes.dyes.FancyDye;
 import net.haizor.fancydyes.item.FancyDyeItem;
-import net.haizor.fancydyes.mixin.ItemRendererAccessor;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.BakedModel;
@@ -31,14 +28,9 @@ public class DyeRenderer {
         }
         FancyDye dye = FancyDye.getDye(itemStack);
         if (dye == null) return false;
-        RenderType renderType = ItemBlockRenderTypes.getRenderType(itemStack, bl3);
         renderDyed(bakedModel, itemStack, i, j, poseStack, multiBufferSource.getBuffer(DyeRenderTypes.get(dye.getItemRenderType(), TextureAtlas.LOCATION_BLOCKS)), dye);
-        if (dye.getType().equals(FancyDye.Type.OVERLAY)) {
-            ((ItemRendererAccessor)Minecraft.getInstance().getItemRenderer()).invokeRenderModelLists(bakedModel, itemStack, i, j, poseStack, multiBufferSource.getBuffer(renderType));
-        }
 
-        poseStack.popPose();
-        return true;
+        return false;
     }
 
     public static void renderDyed(BakedModel bakedModel, ItemStack itemStack, int i, int j, PoseStack poseStack, VertexConsumer vertexConsumer, FancyDye dye) {

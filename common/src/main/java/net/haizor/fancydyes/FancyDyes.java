@@ -37,7 +37,6 @@ public class FancyDyes {
             DYES.put("shimmer_" + color.string(), new ShimmerDye(color.color()));
         }
 
-        DYES.put("inverted", new InvertDye());
         DYES.put("rainbow", new RainbowDye());
         DYES.put("aurora", new AuroraDye());
         DYES.put("flame", new FlameDye());

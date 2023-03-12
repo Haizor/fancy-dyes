@@ -39,18 +39,38 @@ abstract class MixinHumanoidArmorLayer<T extends LivingEntity, M extends Humanoi
 
     @Shadow protected abstract void renderModel(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, ArmorItem armorItem, boolean bl, A humanoidModel, boolean bl2, float f, float g, float h, @Nullable String string);
 
-    @Inject(locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true, method = "renderArmorPiece", at = @At(value = "INVOKE", shift = At.Shift.AFTER, target = "Lnet/minecraft/client/renderer/entity/layers/HumanoidArmorLayer;setPartVisibility(Lnet/minecraft/client/model/HumanoidModel;Lnet/minecraft/world/entity/EquipmentSlot;)V"))
-    private void renderArmorPiece(PoseStack poseStack, MultiBufferSource multiBufferSource, T livingEntity, EquipmentSlot equipmentSlot, int i, A humanoidModel, CallbackInfo ci, ItemStack stack, ArmorItem armorItem) {
-        boolean bl = this.usesInnerModel(equipmentSlot);
+    @Shadow protected abstract A getArmorModel(EquipmentSlot equipmentSlot);
+
+    @Inject(at = @At("TAIL"), method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/LivingEntity;FFFFFF)V")
+    public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, T livingEntity, float f, float g, float h, float j, float k, float l, CallbackInfo ci) {
+        this.renderDye(poseStack, multiBufferSource, livingEntity, EquipmentSlot.HEAD, i, this.getArmorModel(EquipmentSlot.HEAD));
+        this.renderDye(poseStack, multiBufferSource, livingEntity, EquipmentSlot.CHEST, i, this.getArmorModel(EquipmentSlot.CHEST));
+        this.renderDye(poseStack, multiBufferSource, livingEntity, EquipmentSlot.LEGS, i, this.getArmorModel(EquipmentSlot.LEGS));
+        this.renderDye(poseStack, multiBufferSource, livingEntity, EquipmentSlot.FEET, i, this.getArmorModel(EquipmentSlot.FEET));
+    }
+
+    private void renderDye(PoseStack poseStack, MultiBufferSource multiBufferSource, T livingEntity, EquipmentSlot equipmentSlot, int i, A humanoidModel) {
+        ItemStack stack = livingEntity.getItemBySlot(equipmentSlot);
+        if (!(stack.getItem() instanceof ArmorItem armorItem)) return;
         FancyDye dye = FancyDye.getDye(stack);
         if (dye == null) return;
+        boolean bl = this.usesInnerModel(equipmentSlot);
+        this.setPartVisibility(humanoidModel, equipmentSlot);
         this.renderModel(poseStack, multiBufferSource, i, armorItem, humanoidModel, bl, (String) null, dye);
-        if (stack.getItem() instanceof DyeableArmorItem) {
-            renderModel(poseStack, multiBufferSource, i, armorItem, false, humanoidModel, bl, 1, 1,1, "overlay");
-        }
-        dye.renderTick(livingEntity, equipmentSlot, stack);
-        ci.cancel();
     }
+
+//    @Inject(locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true, method = "renderArmorPiece", at = @At(value = "INVOKE", shift = At.Shift.AFTER, target = "Lnet/minecraft/client/renderer/entity/layers/HumanoidArmorLayer;setPartVisibility(Lnet/minecraft/client/model/HumanoidModel;Lnet/minecraft/world/entity/EquipmentSlot;)V"))
+//    private void renderArmorPiece(PoseStack poseStack, MultiBufferSource multiBufferSource, T livingEntity, EquipmentSlot equipmentSlot, int i, A humanoidModel, CallbackInfo ci, ItemStack stack, ArmorItem armorItem) {
+//        boolean bl = this.usesInnerModel(equipmentSlot);
+//        FancyDye dye = FancyDye.getDye(stack);
+//        if (dye == null) return;
+//        this.renderModel(poseStack, multiBufferSource, i, armorItem, humanoidModel, bl, (String) null, dye);
+//        if (stack.getItem() instanceof DyeableArmorItem) {
+//            renderModel(poseStack, multiBufferSource, i, armorItem, false, humanoidModel, bl, 1, 1,1, "overlay");
+//        }
+//        dye.renderTick(livingEntity, equipmentSlot, stack);
+//        ci.cancel();
+//    }
 
     private void renderModel(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, ArmorItem armorItem, A humanoidModel, boolean bl2, @Nullable String string, FancyDye dye) {
         ResourceLocation loc = this.getArmorLocation(armorItem, bl2, string);
@@ -61,10 +81,6 @@ abstract class MixinHumanoidArmorLayer<T extends LivingEntity, M extends Humanoi
         float b = c.getBlue() / 255f;
         float a = DyeRenderer.getAlpha(armorItem.getSlot());
         humanoidModel.renderToBuffer(poseStack, dyeConsumer, i, OverlayTexture.NO_OVERLAY, r, g, b, a);
-        if (dye.getType().equals(FancyDye.Type.OVERLAY)) {
-            VertexConsumer baseConsumer = multiBufferSource.getBuffer(RenderType.armorCutoutNoCull(loc));
-            humanoidModel.renderToBuffer(poseStack, baseConsumer, i, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f);
-        }
     }
 
 
