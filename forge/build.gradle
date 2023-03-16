@@ -19,6 +19,7 @@ loom {
 
         mixinConfig "fancydyes-common.mixins.json"
         mixinConfig "fancydyes.mixins.json"
+        mixinConfig "fancydyes.mixins.oculus.json"
 
         dataGen {
             mod "fancydyes"
@@ -39,6 +40,9 @@ dependencies {
     forge "net.minecraftforge:forge:${rootProject.forge_version}"
     // Remove the next line if you don't want to depend on the API
     modApi "dev.architectury:architectury-forge:${rootProject.architectury_version}"
+
+    modImplementation "maven.modrinth:oculus:1.19.2-1.2.8a"
+    modImplementation "maven.modrinth:rubidium:0.6.2"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }

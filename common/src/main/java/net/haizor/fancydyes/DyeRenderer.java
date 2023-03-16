@@ -16,7 +16,6 @@ import net.minecraft.world.item.ItemStack;
 
 import java.awt.*;
 import java.util.List;
-import java.util.Random;
 
 public class DyeRenderer {
     private static final Direction[] DIRS = new Direction[] {Direction.DOWN, Direction.UP, Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST, null};
@@ -86,9 +85,7 @@ public class DyeRenderer {
                 float h = (c.getBlue() / 255f);
 
                 dyeConsumer.putBulkData(pose, quad, f, g, h, i, j);
-                if (dye.getType().equals(FancyDye.Type.OVERLAY)) {
-                    baseConsumer.putBulkData(pose, quad, 1.0f, 1.0f, 1.0f, i, j);
-                }
+                baseConsumer.putBulkData(pose, quad, 1.0f, 1.0f, 1.0f, i, j);
             } else {
                 baseConsumer.putBulkData(pose, quad, 1.0f, 1.0f, 1.0f, i, j);
             }

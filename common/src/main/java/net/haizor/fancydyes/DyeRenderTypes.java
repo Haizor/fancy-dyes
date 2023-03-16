@@ -105,12 +105,14 @@ public class DyeRenderTypes {
         RenderTypeSupplier armorType = armor(name + "_armor", DefaultVertexFormat.NEW_ENTITY, b -> b
             .setShaderState(shader)
             .setTexturingState(armor != null ? armor : DEFAULT_TEXTURING)
+            .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
             .setTextureState(texture)
         );
 
         RenderTypeSupplier itemType = item(name + "_item", DefaultVertexFormat.NEW_ENTITY, b -> b
             .setShaderState(shader)
             .setTexturingState(item != null ? item : DEFAULT_TEXTURING)
+            .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
             .setTextureState(texture)
         );
 
@@ -132,26 +134,9 @@ public class DyeRenderTypes {
 
         f.accept(builder);
 
-        CompositeRenderType type = create(id, format, VertexFormat.Mode.QUADS, 256, builder.createCompositeState(false));
+        CompositeRenderType type = create(id + "_fancy_dye_glint", format, VertexFormat.Mode.QUADS, 256, builder.createCompositeState(false));
 
         return register(id, type);
-    }
-
-    public static RenderTypeSupplier baseArmor(String id, VertexFormat format, Consumer<CompositeStateBuilder> f) {
-        return register(id, (loc) -> {
-            CompositeStateBuilder builder = RenderType.CompositeState.builder()
-                .setTransparencyState(NO_TRANSPARENCY)
-                .setCullState(NO_CULL)
-                .setLightmapState(LIGHTMAP)
-                .setOverlayState(OVERLAY)
-                .setLayeringState(VIEW_OFFSET_Z_LAYERING);
-
-            f.accept(builder);
-
-            builder.setTextureState(new TextureStateShard(loc, false, false));
-
-            return create(id, format, VertexFormat.Mode.QUADS, 256, builder.createCompositeState(true));
-        });
     }
 
     public static RenderTypeSupplier item(String id, VertexFormat format, Consumer<CompositeStateBuilder> f)  {
@@ -164,7 +149,7 @@ public class DyeRenderTypes {
 
         f.accept(builder);
 
-        return register(id, create(id, format, VertexFormat.Mode.QUADS, 256, builder.createCompositeState(false)));
+        return register(id, create(id + "_fancy_dye_glint", format, VertexFormat.Mode.QUADS, 256, builder.createCompositeState(false)));
     }
 
     public static TexturingStateShard verticalScroll(float f) {
@@ -242,5 +227,10 @@ public class DyeRenderTypes {
                 }
             });
         }
+    }
+
+    @FunctionalInterface
+    public interface TransparencyFix {
+        void fix();
     }
 }

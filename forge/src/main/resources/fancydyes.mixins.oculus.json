@@ -1,0 +1,12 @@
+{
+  "required": false,
+  "package": "net.haizor.fancydyes.forge.oculus.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "MixinTranslucencyRenderOrderManager",
+    "MixinCompositeRenderType"
+  ],
+  "injectors": {
+    "defaultRequire": 0
+  }
+}
