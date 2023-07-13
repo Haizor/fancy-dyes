@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "fancydyes:bright_magenta",
+  "ingredients": [
+    {
+      "item": "fancydyes:magenta_dye"
+    },
+    {
+      "item": "minecraft:glow_ink_sac"
+    }
+  ],
+  "result": {
+    "item": "fancydyes:bright_magenta_dye"
+  }
+}

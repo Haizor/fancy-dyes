@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "fancydyes:bright_cyan",
+  "ingredients": [
+    {
+      "item": "fancydyes:dye_bottle"
+    },
+    {
+      "item": "minecraft:cyan_dye"
+    },
+    {
+      "item": "minecraft:glow_ink_sac"
+    }
+  ],
+  "result": {
+    "item": "fancydyes:bright_cyan_dye"
+  }
+}

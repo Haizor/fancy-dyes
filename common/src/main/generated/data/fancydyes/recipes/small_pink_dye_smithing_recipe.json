@@ -1,0 +1,8 @@
+{
+  "type": "fancydyes:smithing_fancy_dye",
+  "base": {
+    "tag": "fancydyes:dyeable_secondary"
+  },
+  "dye": "fancydyes:pink",
+  "secondary": true
+}

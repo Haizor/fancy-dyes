@@ -1,24 +1,65 @@
 package net.haizor.fancydyes.forge.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.haizor.fancydyes.DyeRenderer;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.haizor.fancydyes.client.FancyDyesRendering;
+import net.haizor.fancydyes.dye.FancyDye;
+import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import java.util.Iterator;
+import java.util.Optional;
+
 @Mixin(ItemRenderer.class)
-public class MixinItemRenderer {
-    @Inject(locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true, method = "render", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Lnet/minecraft/client/renderer/entity/ItemRenderer;renderModelLists(Lnet/minecraft/client/resources/model/BakedModel;Lnet/minecraft/world/item/ItemStack;IILcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;)V"))
-    public void render(ItemStack itemStack, ItemTransforms.TransformType transformType, boolean bl, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int j, BakedModel bakedModel, CallbackInfo ci, boolean bl2, boolean bl3) {
-        if (DyeRenderer.renderItem(itemStack, poseStack, multiBufferSource, i, j, bakedModel, bl3)) {
-            ci.cancel();
+abstract class MixinItemRenderer {
+    @Shadow @Final private ItemColors itemColors;
+
+    @Shadow protected abstract void renderModelLists(BakedModel bakedModel, ItemStack itemStack, int i, int j, PoseStack poseStack, VertexConsumer vertexConsumer);
+
+    @Redirect(
+        method = "render",
+        at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/ItemRenderer;renderModelLists(Lnet/minecraft/client/resources/model/BakedModel;Lnet/minecraft/world/item/ItemStack;IILcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;)V")
+    )
+    private void fancydyes$disableDefaultRenderCall(ItemRenderer renderer, BakedModel model, ItemStack stack, int x, int y, PoseStack poseStack, VertexConsumer consumer) {}
+
+
+    //TODO: looks like forge baked models have a way to get quads based on render type, and a render type list???
+    // this can probably be done better
+    @Inject(
+        method = "render",
+        at = @At(value = "INVOKE", shift = At.Shift.AFTER, target = "Lnet/minecraft/client/renderer/entity/ItemRenderer;renderModelLists(Lnet/minecraft/client/resources/model/BakedModel;Lnet/minecraft/world/item/ItemStack;IILcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;)V"),
+        locals = LocalCapture.CAPTURE_FAILEXCEPTION
+    )
+    private void fancydyes$renderDyed(ItemStack itemStack, ItemDisplayContext context, boolean bl, PoseStack poseStack, MultiBufferSource multiBufferSource, int x, int y, BakedModel model, CallbackInfo ci, boolean flag, boolean bl2, Iterator iterator1, BakedModel currModel, Iterator iterator2, RenderType type, VertexConsumer consumer) {
+        Optional<FancyDye> primary = FancyDye.getDye(itemStack, false);
+        Optional<FancyDye> secondary = FancyDye.getDye(itemStack, true);
+
+        if (primary.isEmpty() && secondary.isEmpty()) {
+            this.renderModelLists(currModel, itemStack, x, y, poseStack, consumer);
+        } else {
+            RandomSource randomSource = RandomSource.create();
+
+            for (Direction direction : Direction.values()) {
+                randomSource.setSeed(42L);
+                FancyDyesRendering.renderDyedItem(poseStack, multiBufferSource, type, currModel.getQuads(null, direction, randomSource), itemStack, x, y, itemColors, context, primary, secondary);
+            }
+            randomSource.setSeed(42L);
+            FancyDyesRendering.renderDyedItem(poseStack, multiBufferSource, type, currModel.getQuads(null, null, randomSource), itemStack, x, y, itemColors, context, primary, secondary);
         }
     }
 }

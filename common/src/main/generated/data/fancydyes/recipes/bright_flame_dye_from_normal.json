@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "fancydyes:bright_flame",
+  "ingredients": [
+    {
+      "item": "fancydyes:flame_dye"
+    },
+    {
+      "item": "minecraft:glow_ink_sac"
+    }
+  ],
+  "result": {
+    "item": "fancydyes:bright_flame_dye"
+  }
+}

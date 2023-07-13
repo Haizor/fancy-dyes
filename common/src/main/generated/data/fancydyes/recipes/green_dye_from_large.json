@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "fancydyes:green",
+  "ingredients": [
+    {
+      "item": "fancydyes:small_green_dye"
+    },
+    {
+      "item": "fancydyes:small_green_dye"
+    }
+  ],
+  "result": {
+    "item": "fancydyes:green_dye"
+  }
+}

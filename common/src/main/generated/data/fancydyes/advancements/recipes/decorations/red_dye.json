@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "bottle_recipe": {
+      "conditions": {
+        "recipe": "fancydyes:dye_bottle"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "dye": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:red_dye",
+              "fancydyes:red_dye"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "fancydyes:red_dye"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "dye",
+      "bottle_recipe",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "fancydyes:red_dye"
+    ]
+  },
+  "sends_telemetry_event": false
+}

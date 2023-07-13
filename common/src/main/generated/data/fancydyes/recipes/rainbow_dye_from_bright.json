@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "fancydyes:rainbow",
+  "ingredients": [
+    {
+      "item": "fancydyes:bright_rainbow_dye"
+    },
+    {
+      "item": "minecraft:ink_sac"
+    }
+  ],
+  "result": {
+    "item": "fancydyes:rainbow_dye"
+  }
+}

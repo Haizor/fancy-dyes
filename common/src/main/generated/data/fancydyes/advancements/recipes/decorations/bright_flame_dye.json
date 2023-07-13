@@ -1,0 +1,42 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "bottle_recipe": {
+      "conditions": {
+        "recipe": "fancydyes:dye_bottle"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "fancydyes:bright_flame_dye"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "ingredient": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:blaze_powder"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "bottle_recipe",
+      "ingredient",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "fancydyes:bright_flame_dye"
+    ]
+  },
+  "sends_telemetry_event": false
+}

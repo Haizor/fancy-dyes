@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "x": {
+      "item": "minecraft:glass"
+    }
+  },
+  "pattern": [
+    "x x",
+    "x x",
+    " x "
+  ],
+  "result": {
+    "count": 8,
+    "item": "fancydyes:dye_bottle"
+  },
+  "show_notification": true
+}

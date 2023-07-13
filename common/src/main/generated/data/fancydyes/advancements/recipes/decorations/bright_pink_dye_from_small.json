@@ -1,0 +1,36 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "dye_bottle": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fancydyes:bright_pink_dye",
+              "fancydyes:small_bright_pink_dye"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "fancydyes:bright_pink_dye_from_small"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "dye_bottle",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "fancydyes:bright_pink_dye_from_small"
+    ]
+  },
+  "sends_telemetry_event": false
+}

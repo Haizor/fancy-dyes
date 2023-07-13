@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "fancydyes:item/small_dye_bottle"
+  }
+}

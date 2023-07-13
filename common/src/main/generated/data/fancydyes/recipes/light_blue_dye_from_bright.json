@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "fancydyes:light_blue",
+  "ingredients": [
+    {
+      "item": "fancydyes:bright_light_blue_dye"
+    },
+    {
+      "item": "minecraft:ink_sac"
+    }
+  ],
+  "result": {
+    "item": "fancydyes:light_blue_dye"
+  }
+}

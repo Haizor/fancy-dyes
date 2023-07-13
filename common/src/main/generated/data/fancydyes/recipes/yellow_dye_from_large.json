@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "fancydyes:yellow",
+  "ingredients": [
+    {
+      "item": "fancydyes:small_yellow_dye"
+    },
+    {
+      "item": "fancydyes:small_yellow_dye"
+    }
+  ],
+  "result": {
+    "item": "fancydyes:yellow_dye"
+  }
+}

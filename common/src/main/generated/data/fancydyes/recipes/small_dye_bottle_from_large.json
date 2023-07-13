@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "fancydyes:dye_bottle"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "fancydyes:small_dye_bottle"
+  }
+}

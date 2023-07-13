@@ -1,0 +1,42 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "bottle_recipe": {
+      "conditions": {
+        "recipe": "fancydyes:dye_bottle"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "fancydyes:aurora_dye"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "ingredient": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:amethyst_shard"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "bottle_recipe",
+      "ingredient",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "fancydyes:aurora_dye"
+    ]
+  },
+  "sends_telemetry_event": false
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "fancydyes:red",
+  "ingredients": [
+    {
+      "item": "fancydyes:red_dye"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "fancydyes:small_red_dye"
+  }
+}

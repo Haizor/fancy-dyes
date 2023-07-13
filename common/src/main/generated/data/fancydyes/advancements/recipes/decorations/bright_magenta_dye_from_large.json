@@ -1,0 +1,36 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "dye_bottle": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fancydyes:bright_magenta_dye",
+              "fancydyes:small_bright_magenta_dye"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "fancydyes:bright_magenta_dye_from_large"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "dye_bottle",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "fancydyes:bright_magenta_dye_from_large"
+    ]
+  },
+  "sends_telemetry_event": false
+}

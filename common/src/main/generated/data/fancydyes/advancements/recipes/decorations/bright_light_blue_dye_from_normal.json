@@ -1,0 +1,36 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "dye_bottle": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fancydyes:light_blue_dye",
+              "fancydyes:bright_light_blue_dye"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "fancydyes:bright_light_blue_dye_from_normal"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "dye_bottle",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "fancydyes:bright_light_blue_dye_from_normal"
+    ]
+  },
+  "sends_telemetry_event": false
+}

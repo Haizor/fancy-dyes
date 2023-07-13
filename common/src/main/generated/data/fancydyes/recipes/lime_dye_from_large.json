@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "fancydyes:lime",
+  "ingredients": [
+    {
+      "item": "fancydyes:small_lime_dye"
+    },
+    {
+      "item": "fancydyes:small_lime_dye"
+    }
+  ],
+  "result": {
+    "item": "fancydyes:lime_dye"
+  }
+}

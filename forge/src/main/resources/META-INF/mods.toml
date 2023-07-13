@@ -1,35 +1,35 @@
 modLoader = "javafml"
-loaderVersion = "[40,)"
+loaderVersion = "[45,)"
 #issueTrackerURL = ""
-license = "MIT"
+license = "Insert License Here"
 
 [[mods]]
-modId = "fancydyes"
+modId = "${mod_id}"
 version = "${version}"
-displayName = "Fancy Dyes"
+displayName = "${mod_name}"
 authors = "Haizor"
 description = '''
-${mod_description}
+This is an example description! Tell everyone what your mod is about!
 '''
-logoFile = "assets/fancydyes/icon.png"
+#logoFile = ""
 
 [[dependencies.fancydyes]]
 modId = "forge"
 mandatory = true
-versionRange = "[40,)"
+versionRange = "[47,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.fancydyes]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[${minecraft_version},)"
+versionRange = "[1.20.1,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.fancydyes]]
 modId = "architectury"
 mandatory = true
-versionRange = "[${architectury_version},)"
+versionRange = "[8.1.79,)"
 ordering = "AFTER"
 side = "BOTH"

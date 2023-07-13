@@ -1,0 +1,7 @@
+{
+  "type": "fancydyes:smithing_fancy_dye_remove",
+  "base": {
+    "tag": "fancydyes:dyeable_secondary"
+  },
+  "secondary": true
+}

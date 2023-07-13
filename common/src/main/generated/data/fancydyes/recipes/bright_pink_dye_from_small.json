@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "fancydyes:bright_pink",
+  "ingredients": [
+    {
+      "item": "fancydyes:bright_pink_dye"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "fancydyes:small_bright_pink_dye"
+  }
+}

@@ -1,14 +1,9 @@
-plugins {
-    id "com.modrinth.minotaur" version "2.+"
-}
-
 architectury {
     common(rootProject.enabled_platforms.split(","))
 }
 
 loom {
     accessWidenerPath = file("src/main/resources/fancydyes.accesswidener")
-
 }
 
 dependencies {
@@ -22,7 +17,7 @@ dependencies {
 publishing {
     publications {
         mavenCommon(MavenPublication) {
-            artifactId = rootProject.archives_base_name
+            artifactId = rootProject.mod_id
             from components.java
         }
     }
@@ -30,5 +25,11 @@ publishing {
     // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
     repositories {
         // Add repositories to publish to here.
+    }
+}
+
+sourceSets {
+    main {
+        resources.srcDir file("src/main/generated")
     }
 }

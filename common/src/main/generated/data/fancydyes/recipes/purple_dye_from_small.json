@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "fancydyes:purple",
+  "ingredients": [
+    {
+      "item": "fancydyes:purple_dye"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "fancydyes:small_purple_dye"
+  }
+}

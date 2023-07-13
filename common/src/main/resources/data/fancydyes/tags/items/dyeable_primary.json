@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:trimmable_armor",
+    "#fancydyes:dyeable_primary_ext"
+  ]
+}

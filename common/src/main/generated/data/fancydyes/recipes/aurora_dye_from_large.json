@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "fancydyes:aurora",
+  "ingredients": [
+    {
+      "item": "fancydyes:small_aurora_dye"
+    },
+    {
+      "item": "fancydyes:small_aurora_dye"
+    }
+  ],
+  "result": {
+    "item": "fancydyes:aurora_dye"
+  }
+}

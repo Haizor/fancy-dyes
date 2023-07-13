@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "fancydyes:orange_dye_smithing_recipe"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "primary_dye": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fancydyes:orange_dye"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "primary_dye",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "fancydyes:orange_dye_smithing_recipe"
+    ]
+  },
+  "sends_telemetry_event": false
+}
