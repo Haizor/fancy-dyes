@@ -8,11 +8,13 @@ import net.haizor.fancydyes.client.FancyDyesClient;
 import net.haizor.fancydyes.dye.FancyDye;
 import net.haizor.fancydyes.item.FancyDyeItem;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.armortrim.ArmorTrim;
 
 import java.util.List;
 import java.util.Optional;

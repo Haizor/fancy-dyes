@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "galosphere:sterling_helmet",
+      "required": false
+    },
+    {
+      "id": "galosphere:sterling_chestplate",
+      "required": false
+    },
+    {
+      "id": "galosphere:sterling_leggings",
+      "required": false
+    },
+    {
+      "id": "galosphere:sterling_boots",
+      "required": false
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 package net.haizor.fancydyes.dye;
 
+import net.haizor.fancydyes.FancyDyes;
+import net.minecraft.resources.ResourceLocation;
 import org.joml.Vector3f;
 
 public class ColorDye implements FancyDye {

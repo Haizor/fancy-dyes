@@ -1,5 +1,7 @@
 package net.haizor.fancydyes.dye;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+import dev.architectury.registry.registries.RegistrarManager;
 import net.haizor.fancydyes.FancyDyes;
 import net.haizor.fancydyes.item.FancyDyeItem;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -10,7 +12,9 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.joml.Vector3f;
+import org.joml.Vector4f;
 
+import java.awt.*;
 import java.util.Optional;
 
 public interface FancyDye {

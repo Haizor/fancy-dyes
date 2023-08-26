@@ -1,9 +1,7 @@
 package net.haizor.fancydyes.client;
 
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.blaze3d.vertex.VertexFormat;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.*;
 import dev.architectury.event.events.client.ClientReloadShadersEvent;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.haizor.fancydyes.FancyDyes;
@@ -33,13 +31,26 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 public class FancyDyesRendering extends RenderType {
     private static Map<FancyDye, Function<ResourceLocation, RenderType>> RENDER_TYPES = new Object2ObjectOpenHashMap<>();
+
+    private static final TexturingStateShard VERTICAL_SCROLL = new TexturingStateShard("vertical_scroll", () -> {
+        long l = (long)((double)Util.getMillis() * Minecraft.getInstance().options.glintSpeed().get() * 8.0);
+        float g = (float)(l % 110000L) / 110000.0f;
+        float h = (float)(l % 30000L) / 30000.0f;
+        Matrix4f matrix4f = new Matrix4f().translation(0.0f, h, 0.0f).mul(RenderSystem.getTextureMatrix());
+
+        RenderSystem.setTextureMatrix(matrix4f);
+    }, () -> {
+        RenderSystem.resetTextureMatrix();
+    });
 
     public static void init() {
         for (FancyDye dye : FancyDyes.DYES_REGISTRAR) {
@@ -75,7 +86,7 @@ public class FancyDyesRendering extends RenderType {
         humanoidModel.renderToBuffer(poseStack, vertexConsumer, i, OverlayTexture.NO_OVERLAY, color.x, color.y, color.z, 1.0f);
     }
 
-    public static void renderDyedModel(FancyDye dye, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, ArmorItem armorItem, Model humanoidModel, boolean bl, float f, float g, float h, ResourceLocation loc) {
+    public static void renderDyedModel(FancyDye dye, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, Model humanoidModel, float f, float g, float h, ResourceLocation loc) {
         Vector3f color = dye.getColor();
         VertexConsumer vertexConsumer = multiBufferSource.getBuffer(FancyDyesRendering.getRenderType(dye).apply(loc));
         FancyDyeRenderSystem.setInverseModelViewMatrix(new Matrix4f(poseStack.last().pose()));

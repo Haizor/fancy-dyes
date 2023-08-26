@@ -2,6 +2,10 @@
   "replace": false,
   "values": [
     "#minecraft:trimmable_armor",
-    "#fancydyes:dyeable_primary_ext"
+    "#minecraft:tools",
+    "#fancydyes:dyeable_primary_ext",
+    "minecraft:elytra",
+
+    "#fancydyes:compat/wardenwalkers"
   ]
 }

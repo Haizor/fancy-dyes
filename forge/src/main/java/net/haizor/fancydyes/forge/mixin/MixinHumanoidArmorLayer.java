@@ -14,11 +14,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.armortrim.ArmorTrim;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -57,8 +55,8 @@ abstract class MixinHumanoidArmorLayer<T extends LivingEntity, M extends Humanoi
     public void fancydyes$renderLeatherArmor(PoseStack poseStack, MultiBufferSource multiBufferSource, T livingEntity, EquipmentSlot slot, int i, A humanoidModel, CallbackInfo ci, ItemStack itemStack, Item item, ArmorItem armorItem, Model model, boolean flag, int color, float r, float g, float b) {
         Optional<FancyDye> dye = FancyDye.getDye(itemStack, false);
         if (dye.isPresent()) {
-            this.renderDyedModel(dye.get(), poseStack, multiBufferSource, i, armorItem, humanoidModel, flag, r, g, b, getArmorResource(livingEntity, itemStack, slot, null));
-            this.renderDyedModel(dye.get(), poseStack, multiBufferSource, i, armorItem, humanoidModel, flag, 1.0f, 1.0f, 1.0f, getArmorResource(livingEntity, itemStack, slot, "overlay"));
+            this.renderDyedModel(dye.get(), poseStack, multiBufferSource, i, humanoidModel, r, g, b, getArmorResource(livingEntity, itemStack, slot, null));
+            this.renderDyedModel(dye.get(), poseStack, multiBufferSource, i, humanoidModel, 1.0f, 1.0f, 1.0f, getArmorResource(livingEntity, itemStack, slot, "overlay"));
         } else {
             this.renderModel(poseStack, multiBufferSource, i, armorItem, model, flag, r, g, b, getArmorResource(livingEntity, itemStack, slot, null));
             this.renderModel(poseStack, multiBufferSource, i, armorItem, model, flag, 1.0f, 1.0f, 1.0f, getArmorResource(livingEntity, itemStack, slot, "overlay"));
@@ -73,7 +71,7 @@ abstract class MixinHumanoidArmorLayer<T extends LivingEntity, M extends Humanoi
     public void fancydyes$renderArmor(PoseStack poseStack, MultiBufferSource multiBufferSource, T livingEntity, EquipmentSlot slot, int i, A humanoidModel, CallbackInfo ci, ItemStack itemStack, Item item, ArmorItem armorItem, Model model, boolean flag) {
         Optional<FancyDye> dye = FancyDye.getDye(itemStack, false);
         if (dye.isPresent()) {
-            this.renderDyedModel(dye.get(), poseStack, multiBufferSource, i, armorItem, model, flag, 1.0f, 1.0f, 1.0f, getArmorResource(livingEntity, itemStack, slot, null));
+            this.renderDyedModel(dye.get(), poseStack, multiBufferSource, i, model, 1.0f, 1.0f, 1.0f, getArmorResource(livingEntity, itemStack, slot, null));
         } else {
             this.renderModel(poseStack, multiBufferSource, i, armorItem, model, flag, 1.0f, 1.0f, 1.0f, getArmorResource(livingEntity, itemStack, slot, null));
         }
@@ -106,7 +104,7 @@ abstract class MixinHumanoidArmorLayer<T extends LivingEntity, M extends Humanoi
         }
     }
 
-    private void renderDyedModel(FancyDye dye, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, ArmorItem armorItem, Model humanoidModel, boolean bl, float f, float g, float h, ResourceLocation location) {
-        FancyDyesRendering.renderDyedModel(dye, poseStack, multiBufferSource, i, armorItem, humanoidModel, bl, f, g, h, location);
+    private void renderDyedModel(FancyDye dye, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, Model humanoidModel, float f, float g, float h, ResourceLocation location) {
+        FancyDyesRendering.renderDyedModel(dye, poseStack, multiBufferSource, i, humanoidModel, f, g, h, location);
     }
 }

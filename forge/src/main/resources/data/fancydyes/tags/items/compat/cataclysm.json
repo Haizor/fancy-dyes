@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "cataclysm:ignitium_helmet",
+      "required": false
+    },
+    {
+      "id": "cataclysm:ignitium_chestplate",
+      "required": false
+    },
+    {
+      "id": "cataclysm:ignitium_elytra_chestplate",
+      "required": false
+    },
+    {
+      "id": "cataclysm:ignitium_leggings",
+      "required": false
+    },
+    {
+      "id": "cataclysm:ignitium_boots",
+      "required": false
+    },
+    {
+      "id": "cataclysm:monstrous_helm",
+      "required": false
+    }
+  ]
+}

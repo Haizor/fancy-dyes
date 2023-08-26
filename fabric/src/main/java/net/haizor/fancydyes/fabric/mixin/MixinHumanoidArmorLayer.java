@@ -22,6 +22,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
@@ -108,6 +109,6 @@ abstract class MixinHumanoidArmorLayer<T extends LivingEntity, M extends Humanoi
 
     private void renderDyedModel(FancyDye dye, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, ArmorItem armorItem, A humanoidModel, boolean bl, float f, float g, float h, @Nullable String string) {
         ResourceLocation location = this.getArmorLocation(armorItem, bl, string);
-        FancyDyesRendering.renderDyedModel(dye, poseStack, multiBufferSource, i, armorItem, humanoidModel, bl, f, g, h, location);
+        FancyDyesRendering.renderDyedModel(dye, poseStack, multiBufferSource, i, humanoidModel, f, g, h, location);
     }
 }

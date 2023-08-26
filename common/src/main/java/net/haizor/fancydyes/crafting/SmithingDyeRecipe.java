@@ -65,7 +65,7 @@ public class SmithingDyeRecipe implements SmithingRecipe {
     @Override
     public ItemStack assemble(Container container, RegistryAccess registryAccess) {
         ItemStack itemStack = container.getItem(1);
-        if (base.test(itemStack) && container.getItem(2).getItem() instanceof FancyDyeItem item) {
+        if (isBaseIngredient(itemStack) && container.getItem(2).getItem() instanceof FancyDyeItem item) {
             FancyDye dye = item.dye.get();
             boolean isSecondary = item.secondary;
 

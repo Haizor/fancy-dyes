@@ -1,5 +1,6 @@
 package net.haizor.fancydyes.dye;
 
+import net.haizor.fancydyes.FancyDyes;
 import net.minecraft.resources.ResourceLocation;
 
 public class FlameDye extends TexturedDye {

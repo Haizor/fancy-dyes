@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "wardenwalkers:warden_walkers",
+      "required": false
+    }
+  ]
+}

@@ -1,4 +1,8 @@
-* Update to 1.20
-* Dyes can be applied to armor trims
-* Shimmer dyes removed
-* All dyes have a bright variant now
+General 
+* Tools, tridents, and elytra are now dyeable
+
+Added Mod Support:
+* Alex's Mobs
+* Cataclysm
+* Galosphere
+* Warden Walkers

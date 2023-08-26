@@ -1,0 +1,57 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "alexsmobs:spiked_turtle_shell",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:fedora",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:centipede_leggings",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:emu_leggings",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:rocky_chestplate",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:unsettling_kimono",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:crocodile_chestplate",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:roadrunner_boots",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:moose_headgear",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:frontier_cap",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:sombrero",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:froststalker_helmet",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:tarantula_hawk_elytra",
+      "required": false
+    }
+  ]
+}

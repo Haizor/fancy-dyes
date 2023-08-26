@@ -43,8 +43,7 @@ void main() {
     texCoord1 = UV1;
     texCoord2 = UV2;
     worldPos = inverse(IModelViewMat) * vec4(Position, 1.0);
-    vec3 test = (DyeMat * worldPos).xyz;
-    texCoord3 = vec2(test.x + test.z, test.y);
+    texCoord3 = (DyeMat * worldPos).xy;
 
     normal = ProjMat * ModelViewMat * vec4(Normal, 0.0);
 }

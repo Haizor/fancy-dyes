@@ -4,6 +4,10 @@
     "#forge:armors/helmets",
     "#forge:armors/chestplates",
     "#forge:armors/leggings",
-    "#forge:armors/boots"
+    "#forge:armors/boots",
+
+    "#fancydyes:compat/alexsmobs",
+    "#fancydyes:compat/cataclysm",
+    "#fancydyes:compat/galosphere"
   ]
 }
