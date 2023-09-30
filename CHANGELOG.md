@@ -1,8 +1,8 @@
-General 
-* Tools, tridents, and elytra are now dyeable
-
-Added Mod Support:
-* Alex's Mobs
-* Cataclysm
-* Galosphere
-* Warden Walkers
+2.1.0
+* Dye rendering uses custom vertex consumer, meaning partial shader
+compatibility.
+* Add geckolib compat
+* Readd trans dye
+* Remove trident dyeing for now
+* Disable safety protocols (anything that extends ArmorItem can
+be dyed now)
