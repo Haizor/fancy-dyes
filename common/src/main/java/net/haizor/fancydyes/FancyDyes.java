@@ -45,6 +45,12 @@ public class FancyDyes {
     public static final RegistrySupplier<FancyDye> AURORA = registerDye("aurora", () -> new TexturedDye(FancyDyes.id("textures/dye/aurora.png")).withTexturing(TexturedDye.Texturing.VERTICAL_SCROLL));
     public static final RegistrySupplier<FancyDye> BRIGHT_AURORA = registerDye("bright_aurora", () -> new BrightTexturedDye(FancyDyes.id("textures/dye/aurora.png")).withTexturing(TexturedDye.Texturing.VERTICAL_SCROLL));
 
+    public static final RegistrySupplier<FancyDye> TRANS = registerDye("trans", () -> new TexturedDye(FancyDyes.id("textures/dye/trans.png")).withTexturing(TexturedDye.Texturing.VERTICAL_SCROLL));
+    public static final RegistrySupplier<FancyDye> BRIGHT_TRANS = registerDye("bright_trans", () -> new BrightTexturedDye(FancyDyes.id("textures/dye/trans.png")).withTexturing(TexturedDye.Texturing.VERTICAL_SCROLL));
+
+    public static final RegistrySupplier<FancyDye> ENBY = registerDye("enby", () -> new TexturedDye(FancyDyes.id("textures/dye/enby.png")).withTexturing(TexturedDye.Texturing.VERTICAL_SCROLL));
+    public static final RegistrySupplier<FancyDye> BRIGHT_ENBY = registerDye("bright_enby", () -> new BrightTexturedDye(FancyDyes.id("textures/dye/enby.png")).withTexturing(TexturedDye.Texturing.VERTICAL_SCROLL));
+
     public static final RegistrySupplier<FancyDye> FLAME = registerDye("flame", () -> new FlameDye(FancyDyes.id("textures/dye/flame.png")));
     public static final RegistrySupplier<FancyDye> BRIGHT_FLAME = registerDye("bright_flame", () -> new BrightFlameDye(FancyDyes.id("textures/dye/flame.png")));
     public static final RegistrySupplier<FancyDye> GREEN_FLAME = registerDye("green_flame", () -> new FlameDye(FancyDyes.id("textures/dye/green_flame.png")));

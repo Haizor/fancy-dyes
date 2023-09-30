@@ -1,6 +1,9 @@
 package net.haizor.fancydyes.forge.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.haizor.fancydyes.FancyDyeHelper;
+import net.haizor.fancydyes.client.DyeArmorVertexConsumer;
 import net.haizor.fancydyes.client.FancyDyesRendering;
 import net.haizor.fancydyes.dye.FancyDye;
 import net.minecraft.client.model.HumanoidModel;
@@ -9,14 +12,17 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.armortrim.ArmorTrim;
-import org.jetbrains.annotations.Nullable;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,86 +31,50 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+
 import java.util.Optional;
 
 @Mixin(HumanoidArmorLayer.class)
 abstract class MixinHumanoidArmorLayer<T extends LivingEntity, M extends HumanoidModel<T>, A extends HumanoidModel<T>> extends RenderLayer<T, M> {
-    @Shadow protected abstract void renderModel(PoseStack par1, MultiBufferSource par2, int par3, ArmorItem par4, Model par5, boolean par6, float par7, float par8, float par9, ResourceLocation par10);
+    @Shadow @Final private TextureAtlas armorTrimAtlas;
 
-    @Shadow public abstract ResourceLocation getArmorResource(Entity par1, ItemStack par2, EquipmentSlot par3, String par4);
+    MixinHumanoidArmorLayer(RenderLayerParent<T, M> renderLayerParent) {
+        super(renderLayerParent);
+    }
+    @Inject(method = "renderArmorPiece", locals = LocalCapture.CAPTURE_FAILEXCEPTION, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;hasFoil()Z", shift = At.Shift.BEFORE))
+    void fancydyes$armorOverlay(PoseStack poseStack, MultiBufferSource multiBufferSource, T livingEntity, EquipmentSlot equipmentSlot, int i, A humanoidModel, CallbackInfo ci, ItemStack stack, Item item, ArmorItem armorItem, Model armorModel) {
+        Optional<FancyDye> optDye = FancyDye.getDye(stack, false);
+        if (optDye.isEmpty()) return;
 
-    @Shadow protected abstract void renderTrim(ArmorMaterial armorMaterial, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, ArmorTrim armorTrim, A humanoidModel, boolean bl);
-
-    @Shadow protected abstract void renderTrim(ArmorMaterial par1, PoseStack par2, MultiBufferSource par3, int par4, ArmorTrim par5, Model par6, boolean par7);
-
-    MixinHumanoidArmorLayer(RenderLayerParent<T, M> arg) {
-        super(arg);
+        FancyDye dye = optDye.get();
+        if (!FancyDyeHelper.shouldDoBaseDyeRender(stack)) return;
+        VertexConsumer consumer = new DyeArmorVertexConsumer(multiBufferSource.getBuffer(FancyDyesRendering.getDyeArmorType(dye, false)), livingEntity, poseStack);
+        armorModel.renderToBuffer(poseStack, consumer, i, OverlayTexture.NO_OVERLAY, dye.getColor().x, dye.getColor().y, dye.getColor().z, 1f);
     }
 
-    @Redirect(
-            method = "renderArmorPiece",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/layers/HumanoidArmorLayer;renderModel(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/item/ArmorItem;Lnet/minecraft/client/model/Model;ZFFFLnet/minecraft/resources/ResourceLocation;)V")
-    )
-    private void fancydyes$disableDefaultRender(HumanoidArmorLayer instance, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, ArmorItem armorItem, Model humanoidModel, boolean bl, float f, float g, float h, ResourceLocation location) {}
+    @Inject(method = "renderArmorPiece", at = @At(value = "INVOKE", target = "Ljava/util/Optional;ifPresent(Ljava/util/function/Consumer;)V", shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
+    void fancydyes$armorTrimOverlay(PoseStack poseStack, MultiBufferSource multiBufferSource, T livingEntity, EquipmentSlot equipmentSlot, int i, A humanoidModel, CallbackInfo ci, ItemStack itemStack, Item item, ArmorItem armorItem, Model model, boolean bl) {
+        Optional<FancyDye> optDye = FancyDye.getDye(itemStack, true);
+        if (optDye.isEmpty()) return;
+        Optional<ArmorTrim> optTrim = ArmorTrim.getTrim(livingEntity.level().registryAccess(), itemStack);
+        if (optTrim.isEmpty()) return;
 
-    @Inject(
-        method = "renderArmorPiece",
-        at = @At(value = "INVOKE", shift = At.Shift.BEFORE, ordinal = 0, target = "Lnet/minecraft/client/renderer/entity/layers/HumanoidArmorLayer;renderModel(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/item/ArmorItem;Lnet/minecraft/client/model/Model;ZFFFLnet/minecraft/resources/ResourceLocation;)V"),
-        locals = LocalCapture.CAPTURE_FAILEXCEPTION
-    )
-    public void fancydyes$renderLeatherArmor(PoseStack poseStack, MultiBufferSource multiBufferSource, T livingEntity, EquipmentSlot slot, int i, A humanoidModel, CallbackInfo ci, ItemStack itemStack, Item item, ArmorItem armorItem, Model model, boolean flag, int color, float r, float g, float b) {
-        Optional<FancyDye> dye = FancyDye.getDye(itemStack, false);
-        if (dye.isPresent()) {
-            this.renderDyedModel(dye.get(), poseStack, multiBufferSource, i, humanoidModel, r, g, b, getArmorResource(livingEntity, itemStack, slot, null));
-            this.renderDyedModel(dye.get(), poseStack, multiBufferSource, i, humanoidModel, 1.0f, 1.0f, 1.0f, getArmorResource(livingEntity, itemStack, slot, "overlay"));
-        } else {
-            this.renderModel(poseStack, multiBufferSource, i, armorItem, model, flag, r, g, b, getArmorResource(livingEntity, itemStack, slot, null));
-            this.renderModel(poseStack, multiBufferSource, i, armorItem, model, flag, 1.0f, 1.0f, 1.0f, getArmorResource(livingEntity, itemStack, slot, "overlay"));
-        }
+        FancyDye dye = optDye.get();
+
+        VertexConsumer consumer = new DyeArmorVertexConsumer(multiBufferSource.getBuffer(FancyDyesRendering.getDyeArmorType(dye, true)), livingEntity, poseStack);
+        poseStack.pushPose();
+        poseStack.scale(1.01f, 1.01f, 1.01f);
+        humanoidModel.renderToBuffer(poseStack, consumer, i, OverlayTexture.NO_OVERLAY, dye.getColor().x, dye.getColor().y, dye.getColor().z, 1.0f);
+        poseStack.popPose();
     }
 
-    @Inject(
-        method = "renderArmorPiece",
-        at = @At(value = "INVOKE", shift = At.Shift.BEFORE, ordinal = 2, target = "Lnet/minecraft/client/renderer/entity/layers/HumanoidArmorLayer;renderModel(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/item/ArmorItem;Lnet/minecraft/client/model/Model;ZFFFLnet/minecraft/resources/ResourceLocation;)V"),
-        locals = LocalCapture.CAPTURE_FAILEXCEPTION
-    )
-    public void fancydyes$renderArmor(PoseStack poseStack, MultiBufferSource multiBufferSource, T livingEntity, EquipmentSlot slot, int i, A humanoidModel, CallbackInfo ci, ItemStack itemStack, Item item, ArmorItem armorItem, Model model, boolean flag) {
-        Optional<FancyDye> dye = FancyDye.getDye(itemStack, false);
-        if (dye.isPresent()) {
-            this.renderDyedModel(dye.get(), poseStack, multiBufferSource, i, model, 1.0f, 1.0f, 1.0f, getArmorResource(livingEntity, itemStack, slot, null));
-        } else {
-            this.renderModel(poseStack, multiBufferSource, i, armorItem, model, flag, 1.0f, 1.0f, 1.0f, getArmorResource(livingEntity, itemStack, slot, null));
-        }
-    }
-
-    @Redirect(
-        method = "renderArmorPiece",
-        at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/armortrim/ArmorTrim;getTrim(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/item/ItemStack;)Ljava/util/Optional;")
-    )
-    private Optional<ArmorTrim> fancydyes$disableDefaultTrimRendering(RegistryAccess registryAccess, ItemStack itemStack) {
-        return Optional.empty();
-    }
-
-    @Inject(
-        method = "renderArmorPiece",
-        at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/armortrim/ArmorTrim;getTrim(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/item/ItemStack;)Ljava/util/Optional;"),
-        locals = LocalCapture.CAPTURE_FAILEXCEPTION
-    )
-    private void fancydyes$trimRendering(PoseStack poseStack, MultiBufferSource multiBufferSource, T livingEntity, EquipmentSlot equipmentSlot, int i, A humanoidModel, CallbackInfo ci, ItemStack itemStack, Item item, ArmorItem armorItem, Model model, boolean flag) {
-        Optional<ArmorTrim> trim = ArmorTrim.getTrim(livingEntity.level().registryAccess(), itemStack);
-        if (trim.isPresent()) {
-            Optional<FancyDye> dye = FancyDye.getDye(itemStack, true);
-
-            if (dye.isPresent()) {
-                FancyDyesRendering.renderTrim(dye.get(), armorItem.getMaterial(), poseStack, multiBufferSource, i, trim.get(), humanoidModel, flag);
-            } else {
-                this.renderTrim(armorItem.getMaterial(), poseStack, multiBufferSource, i, trim.get(), model, flag);
-            }
-
-        }
-    }
-
-    private void renderDyedModel(FancyDye dye, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, Model humanoidModel, float f, float g, float h, ResourceLocation location) {
-        FancyDyesRendering.renderDyedModel(dye, poseStack, multiBufferSource, i, humanoidModel, f, g, h, location);
+    @Redirect(method = "Lnet/minecraft/client/renderer/entity/layers/HumanoidArmorLayer;renderTrim(Lnet/minecraft/world/item/ArmorMaterial;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/item/armortrim/ArmorTrim;Lnet/minecraft/client/model/Model;Z)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/Model;renderToBuffer(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;IIFFFF)V"))
+    void fancydyes$scaleTrim(Model instance, PoseStack poseStack, VertexConsumer vertexConsumer, int i, int f, float r, float g, float b, float a, ArmorMaterial am, PoseStack poseStack2, MultiBufferSource source, int i2, ArmorTrim trim, Model model2, boolean bl) {
+        poseStack.pushPose();
+        poseStack.scale(1.01f, 1.01f, 1.01f);
+        TextureAtlasSprite textureAtlasSprite = this.armorTrimAtlas.getSprite(bl ? trim.innerTexture(am) : trim.outerTexture(am));
+        VertexConsumer consumer = textureAtlasSprite.wrap(source.getBuffer(FancyDyesRendering.armorTrimOffset()));
+        instance.renderToBuffer(poseStack, consumer, i, f, r, g, b, a);
+        poseStack.popPose();
     }
 }

@@ -24,11 +24,37 @@
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "self_large": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fancydyes:bright_blue_flame_dye"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "self_small": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fancydyes:small_bright_blue_flame_dye"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "requirements": [
     [
       "bottle_recipe",
+      "self_large",
+      "self_small",
       "ingredient",
       "has_the_recipe"
     ]

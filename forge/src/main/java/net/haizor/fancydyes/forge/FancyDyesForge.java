@@ -5,23 +5,22 @@ import dev.architectury.platform.forge.EventBuses;
 import net.haizor.fancydyes.FancyDyes;
 import net.haizor.fancydyes.client.FancyDyedItemTooltip;
 import net.haizor.fancydyes.client.FancyDyesClient;
+import net.haizor.fancydyes.client.FancyDyesRendering;
 import net.haizor.fancydyes.dye.FancyDye;
+import net.haizor.fancydyes.forge.compat.gecko.GeckoLibCompat;
+import net.haizor.fancydyes.forge.mixin.RenderBuffersAccessor;
 import net.haizor.fancydyes.item.FancyDyeItem;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.screens.inventory.tooltip.ClientTextTooltip;
-import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
-import net.minecraft.util.FormattedCharSequence;
-import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.EventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.IModBusEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -42,6 +41,10 @@ public class FancyDyesForge {
         @SubscribeEvent
         public static void onClientInit(FMLClientSetupEvent event) {
             FancyDyesClient.init();
+            if (ModList.get().isLoaded("geckolib")) {
+                MinecraftForge.EVENT_BUS.register(GeckoLibCompat.class);
+            }
+            FancyDyesRendering.addDyeTypes(((RenderBuffersAccessor) Minecraft.getInstance().renderBuffers()).getFixedBuffers());
         }
 
         @SubscribeEvent

@@ -1,6 +1,5 @@
 package net.haizor.fancydyes.dye;
 
-import net.haizor.fancydyes.FancyDyes;
 import net.minecraft.resources.ResourceLocation;
 import org.joml.Vector3f;
 
@@ -10,8 +9,8 @@ public class BrightTexturedDye extends TexturedDye {
     }
 
     @Override
-    public String getShaderType() {
-        return "texture_additive";
+    public BlendMode getBlendMode() {
+        return BlendMode.ADDITIVE;
     }
 
     @Override

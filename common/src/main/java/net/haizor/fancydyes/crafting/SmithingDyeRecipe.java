@@ -12,6 +12,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.Container;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.armortrim.ArmorTrim;
@@ -45,7 +46,7 @@ public class SmithingDyeRecipe implements SmithingRecipe {
 
     @Override
     public boolean isBaseIngredient(ItemStack itemStack) {
-        return base.test(itemStack);
+        return base.test(itemStack) || (!secondary && itemStack.getItem() instanceof ArmorItem);
     }
 
     @Override

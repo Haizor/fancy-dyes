@@ -33,6 +33,15 @@ dependencies {
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
+
+    modRuntimeOnly "software.bernie.geckolib:geckolib-forge-1.20.1:4.2.2"
+    modCompileOnlyApi "software.bernie.geckolib:geckolib-forge-1.20.1:4.2.2"
+
+    modRuntimeOnly "curse.maven:epic-samurais-848381:4771585"
+    modRuntimeOnly "curse.maven:the-twilight-forest-227639:4755494"
+    modRuntimeOnly "curse.maven:kawaii-dishes-694309:4701259"
+    modRuntimeOnly "curse.maven:embeddium-908741:4768513"
+    modRuntimeOnly "curse.maven:oculus-581495:4767500"
 }
 
 processResources {

@@ -97,6 +97,14 @@ public class FancyDyesDataGenerator implements DataGeneratorEntrypoint {
             createDyeRecipe(exporter, FancyDyes.BLUE_FLAME.get(), Items.BLAZE_POWDER, Items.CYAN_DYE, Items.LIGHT_BLUE_DYE, Items.BLUE_DYE, Items.BLAZE_POWDER);
             createDyeRecipe(exporter, FancyDyes.BRIGHT_BLUE_FLAME.get(), Items.BLAZE_POWDER, Items.CYAN_DYE, Items.LIGHT_BLUE_DYE, Items.BLUE_DYE, Items.BLAZE_POWDER, Items.GLOW_INK_SAC);
             createBrightnessConversionRecipe(exporter, FancyDyes.BLUE_FLAME.get(), FancyDyes.BRIGHT_BLUE_FLAME.get());
+
+            createDyeRecipe(exporter, FancyDyes.TRANS.get(), null, Items.PINK_DYE, Items.LIGHT_BLUE_DYE, Items.WHITE_DYE);
+            createDyeRecipe(exporter, FancyDyes.BRIGHT_TRANS.get(), null, Items.PINK_DYE, Items.LIGHT_BLUE_DYE, Items.WHITE_DYE, Items.GLOW_INK_SAC);
+            createBrightnessConversionRecipe(exporter, FancyDyes.TRANS.get(), FancyDyes.BRIGHT_TRANS.get());
+
+            createDyeRecipe(exporter, FancyDyes.ENBY.get(), null, Items.BLACK_DYE, Items.YELLOW_DYE, Items.WHITE_DYE, Items.PURPLE_DYE);
+            createDyeRecipe(exporter, FancyDyes.BRIGHT_ENBY.get(), null, Items.BLACK_DYE, Items.YELLOW_DYE, Items.WHITE_DYE, Items.PURPLE_DYE, Items.GLOW_INK_SAC);
+            createBrightnessConversionRecipe(exporter, FancyDyes.ENBY.get(), FancyDyes.BRIGHT_ENBY.get());
         }
 
         public void createSizeConversionRecipe(FancyDye dye, Consumer<FinishedRecipe> exporter) {
@@ -298,6 +306,12 @@ public class FancyDyesDataGenerator implements DataGeneratorEntrypoint {
 
             forDye(FancyDyes.BLUE_FLAME.get(), "Blue Flame", translationBuilder);
             forDye(FancyDyes.BRIGHT_BLUE_FLAME.get(), "Bright Blue Flame", translationBuilder);
+
+            forDye(FancyDyes.TRANS.get(), "Trans", translationBuilder);
+            forDye(FancyDyes.BRIGHT_TRANS.get(), "Bright Trans", translationBuilder);
+
+            forDye(FancyDyes.ENBY.get(), "Enby", translationBuilder);
+            forDye(FancyDyes.BRIGHT_ENBY.get(), "Bright Enby", translationBuilder);
         }
 
         public void forDye(FancyDye dye, String name, TranslationBuilder builder) {

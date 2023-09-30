@@ -2,7 +2,11 @@
   "replace": false,
   "values": [
     "#minecraft:trimmable_armor",
-    "#minecraft:tools",
+    "#minecraft:swords",
+    "#minecraft:axes",
+    "#minecraft:pickaxes",
+    "#minecraft:shovels",
+    "#minecraft:hoes",
     "#fancydyes:dyeable_primary_ext",
     "minecraft:elytra",
 

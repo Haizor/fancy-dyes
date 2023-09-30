@@ -1,7 +1,7 @@
 modLoader = "javafml"
 loaderVersion = "[45,)"
-#issueTrackerURL = ""
-license = "Insert License Here"
+issueTrackerURL = "https://github.com/Haizor/fancy-dyes/issues"
+license = "MIT"
 
 [[mods]]
 modId = "${mod_id}"
@@ -9,7 +9,7 @@ version = "${version}"
 displayName = "${mod_name}"
 authors = "Haizor"
 description = '''
-This is an example description! Tell everyone what your mod is about!
+${mod_description}
 '''
 #logoFile = ""
 
@@ -30,6 +30,6 @@ side = "BOTH"
 [[dependencies.fancydyes]]
 modId = "architectury"
 mandatory = true
-versionRange = "[8.1.79,)"
+versionRange = "[9.0.8,)"
 ordering = "AFTER"
 side = "BOTH"

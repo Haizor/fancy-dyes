@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "fancydyes:enby",
+  "ingredients": [
+    {
+      "item": "fancydyes:small_enby_dye"
+    },
+    {
+      "item": "fancydyes:small_enby_dye"
+    }
+  ],
+  "result": {
+    "item": "fancydyes:enby_dye"
+  }
+}

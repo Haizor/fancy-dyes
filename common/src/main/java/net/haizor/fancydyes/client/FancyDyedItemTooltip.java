@@ -8,8 +8,8 @@ import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
 
 public class FancyDyedItemTooltip implements TooltipComponent {
-    public FancyDye dye;
-    public boolean secondary;
+    public final FancyDye dye;
+    public final boolean secondary;
 
     public FancyDyedItemTooltip(FancyDye dye, boolean secondary) {
         this.dye = dye;
@@ -17,8 +17,8 @@ public class FancyDyedItemTooltip implements TooltipComponent {
     }
 
     public static class Client implements ClientTooltipComponent {
-        public FancyDye dye;
-        public boolean secondary;
+        public final FancyDye dye;
+        public final boolean secondary;
 
         public Client(FancyDyedItemTooltip context) {
             this.dye = context.dye;

@@ -13,7 +13,8 @@
           {
             "items": [
               "minecraft:red_dye",
-              "fancydyes:red_dye"
+              "fancydyes:red_dye",
+              "fancydyes:bright_red_dye"
             ]
           }
         ]

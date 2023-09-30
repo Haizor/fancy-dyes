@@ -14,6 +14,7 @@
             "items": [
               "minecraft:purple_dye",
               "minecraft:glow_ink_sac",
+              "fancydyes:purple_dye",
               "fancydyes:bright_purple_dye"
             ]
           }

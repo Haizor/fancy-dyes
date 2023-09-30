@@ -13,7 +13,8 @@
           {
             "items": [
               "minecraft:magenta_dye",
-              "fancydyes:magenta_dye"
+              "fancydyes:magenta_dye",
+              "fancydyes:bright_magenta_dye"
             ]
           }
         ]

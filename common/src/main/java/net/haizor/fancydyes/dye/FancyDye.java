@@ -1,7 +1,5 @@
 package net.haizor.fancydyes.dye;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import dev.architectury.registry.registries.RegistrarManager;
 import net.haizor.fancydyes.FancyDyes;
 import net.haizor.fancydyes.item.FancyDyeItem;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -11,10 +9,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import org.joml.Matrix4f;
 import org.joml.Vector3f;
-import org.joml.Vector4f;
 
-import java.awt.*;
 import java.util.Optional;
 
 public interface FancyDye {
@@ -26,8 +23,6 @@ public interface FancyDye {
     TagKey<Item> DYEABLE_PRIMARY = TagKey.create(Registries.ITEM, FancyDyes.id("dyeable_primary"));
     TagKey<Item> DYEABLE_SECONDARY = TagKey.create(Registries.ITEM, FancyDyes.id("dyeable_secondary"));
 
-    String getShaderType();
-
     default ResourceLocation toId() {
         return FancyDyes.DYES_REGISTRAR.getId(this);
     }
@@ -37,10 +32,18 @@ public interface FancyDye {
     }
 
     default Vector3f getColor() { return new Vector3f(1f); }
-    default void setupRenderState() {}
-    default void resetRenderState() {
-
+    default BlendMode getBlendMode() {
+        return BlendMode.MULTIPLICATIVE;
     }
+    default Matrix4f getTextureMatrix() {
+        return new Matrix4f();
+    }
+
+    default Type getType() {
+        return Type.ANIMATED_TEXTURE;
+    }
+
+    ResourceLocation getTexture();
 
     default String toIdString() {
         return this.toId().toString();
@@ -83,5 +86,15 @@ public interface FancyDye {
             root.putString(key, dye.toId().toString());
         }
         stack.addTagElement(ROOT_DYE_TAG, root);
+    }
+
+    enum BlendMode {
+        ADDITIVE,
+        MULTIPLICATIVE
+    }
+
+    enum Type {
+        ANIMATED_TEXTURE,
+        COLORED_TEXTURE
     }
 }

@@ -18,11 +18,24 @@
         "recipe": "fancydyes:dye_bottle"
       },
       "trigger": "minecraft:recipe_unlocked"
+    },
+    "self": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fancydyes:dye_bottle"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "requirements": [
     [
       "glass",
+      "self",
       "has_the_recipe"
     ]
   ],

@@ -14,6 +14,7 @@
             "items": [
               "minecraft:green_dye",
               "minecraft:glow_ink_sac",
+              "fancydyes:green_dye",
               "fancydyes:bright_green_dye"
             ]
           }

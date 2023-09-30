@@ -1,6 +1,5 @@
 package net.haizor.fancydyes.dye;
 
-import net.haizor.fancydyes.FancyDyes;
 import net.minecraft.resources.ResourceLocation;
 
 public class FlameDye extends TexturedDye {
@@ -9,8 +8,5 @@ public class FlameDye extends TexturedDye {
         this.texturing = Texturing.FLAME;
     }
 
-    @Override
-    public String getShaderType() {
-        return "flame_multiply";
-    }
+
 }

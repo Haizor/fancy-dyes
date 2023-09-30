@@ -3,18 +3,14 @@
   "package": "net.haizor.fancydyes.mixin",
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
-  "client": [
-    "MixinBlockEntityWithoutLevelRenderer",
-    "MixinElytraLayer",
-    "MixinRenderSystem",
-    "MixinThrownTridentRenderer",
-    "MixinVertexBuffer"
-  ],
   "injectors": {
     "defaultRequire": 1
   },
   "mixins": [
-    "MixinSmithingMenu",
-    "MixinThrownTrident"
+    "MixinItemStack",
+    "MixinSmithingMenu"
+  ],
+  "client": [
+    "MixinElytraLayer"
   ]
 }

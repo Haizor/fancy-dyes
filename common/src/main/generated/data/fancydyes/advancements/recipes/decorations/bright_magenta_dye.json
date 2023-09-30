@@ -14,6 +14,7 @@
             "items": [
               "minecraft:magenta_dye",
               "minecraft:glow_ink_sac",
+              "fancydyes:magenta_dye",
               "fancydyes:bright_magenta_dye"
             ]
           }

@@ -12,11 +12,37 @@
         "recipe": "fancydyes:bright_rainbow_dye"
       },
       "trigger": "minecraft:recipe_unlocked"
+    },
+    "self_large": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fancydyes:bright_rainbow_dye"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "self_small": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fancydyes:small_bright_rainbow_dye"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "requirements": [
     [
       "bottle_recipe",
+      "self_large",
+      "self_small",
       "has_the_recipe"
     ]
   ],

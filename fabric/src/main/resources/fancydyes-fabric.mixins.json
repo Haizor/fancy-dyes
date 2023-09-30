@@ -6,7 +6,8 @@
   "client": [
     "MixinAbstractContainerScreen",
     "MixinHumanoidArmorLayer",
-    "MixinItemRenderer"
+    "MixinItemRenderer",
+    "MixinRenderBuffers"
   ],
   "mixins": [
   ],

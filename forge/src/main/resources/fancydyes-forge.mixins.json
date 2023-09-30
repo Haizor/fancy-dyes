@@ -5,8 +5,9 @@
   "minVersion": "0.8",
   "client": [
     "MixinAbstractContainerScreen",
+    "MixinItemRenderer",
     "MixinHumanoidArmorLayer",
-    "MixinItemRenderer"
+    "RenderBuffersAccessor"
   ],
   "mixins": [
   ],

@@ -1,6 +1,5 @@
 package net.haizor.fancydyes.dye;
 
-import net.haizor.fancydyes.client.FancyDyeRenderSystem;
 import net.minecraft.Util;
 import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
@@ -15,19 +14,18 @@ public class TexturedDye implements FancyDye {
     }
 
     @Override
-    public void setupRenderState() {
-        FancyDyeRenderSystem.setTexture(3, texture);
-        FancyDyeRenderSystem.setDyeMatrix(this.texturing.supplyTexturing().mul(FancyDyeRenderSystem.getDyeMatrix()));
+    public Matrix4f getTextureMatrix() {
+        return texturing.supplyTexturing();
+    }
+
+    @Override
+    public ResourceLocation getTexture() {
+        return this.texture;
     }
 
     public TexturedDye withTexturing(Texturing texturing) {
         this.texturing = texturing;
         return this;
-    }
-
-    @Override
-    public String getShaderType() {
-        return "texture_multiply";
     }
 
     @FunctionalInterface
@@ -36,9 +34,9 @@ public class TexturedDye implements FancyDye {
 
         Texturing STATIC = Matrix4f::new;
 
-        Texturing VERTICAL_SCROLL = scroll(0f, 0.2f);
+        Texturing VERTICAL_SCROLL = scroll(180f, 0.2f);
 
-        Texturing FLAME = scroll(180f, 1f);
+        Texturing FLAME = scroll(0f, 1f);
 
         static Texturing scroll(float angle, float speed) {
             return () -> {

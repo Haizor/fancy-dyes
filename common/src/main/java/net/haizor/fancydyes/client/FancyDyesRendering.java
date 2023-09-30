@@ -1,227 +1,200 @@
 package net.haizor.fancydyes.client;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.*;
-import dev.architectury.event.events.client.ClientReloadShadersEvent;
-import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.VertexFormat;
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import net.haizor.fancydyes.FancyDyes;
 import net.haizor.fancydyes.dye.FancyDye;
-import net.haizor.fancydyes.item.FancyDyeItem;
 import net.minecraft.Util;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.color.item.ItemColors;
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.Model;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.renderer.Sheets;
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.ResourceProvider;
-import net.minecraft.world.inventory.InventoryMenu;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.ItemDisplayContext;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.armortrim.ArmorTrim;
 import org.joml.Matrix4f;
-import org.joml.Vector3f;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 public class FancyDyesRendering extends RenderType {
-    private static Map<FancyDye, Function<ResourceLocation, RenderType>> RENDER_TYPES = new Object2ObjectOpenHashMap<>();
-
-    private static final TexturingStateShard VERTICAL_SCROLL = new TexturingStateShard("vertical_scroll", () -> {
-        long l = (long)((double)Util.getMillis() * Minecraft.getInstance().options.glintSpeed().get() * 8.0);
-        float g = (float)(l % 110000L) / 110000.0f;
-        float h = (float)(l % 30000L) / 30000.0f;
-        Matrix4f matrix4f = new Matrix4f().translation(0.0f, h, 0.0f).mul(RenderSystem.getTextureMatrix());
-
-        RenderSystem.setTextureMatrix(matrix4f);
+    private static final LayeringStateShard ARMOR_TRIM_LAYERING = new RenderStateShard.LayeringStateShard("armor_trim_layering", () -> {
+        RenderSystem.polygonOffset(-1.0f, -10.0f);
+        RenderSystem.enablePolygonOffset();
     }, () -> {
-        RenderSystem.resetTextureMatrix();
+        RenderSystem.polygonOffset(0.0F, 0.0F);
+        RenderSystem.disablePolygonOffset();
     });
 
-    public static void init() {
-        for (FancyDye dye : FancyDyes.DYES_REGISTRAR) {
-            RENDER_TYPES.put(dye, createRenderTypeFor(dye));
-        }
-    }
+    private static final LayeringStateShard ITEM_TRIM_LAYERING = new RenderStateShard.LayeringStateShard("armor_trim_layering", () -> {
+        RenderSystem.polygonOffset(-1.0f, -0.5f);
+        RenderSystem.enablePolygonOffset();
+    }, () -> {
+        RenderSystem.polygonOffset(0.0F, 0.0F);
+        RenderSystem.disablePolygonOffset();
+    });
 
-    public static Function<ResourceLocation, RenderType> createRenderTypeFor(FancyDye dye) {
-        return Util.memoize((tex) -> {
-            CompositeState.CompositeStateBuilder builder = CompositeState.builder()
-                .setTextureState(new TextureStateShard(tex, false, false))
-                .setShaderState(Shaders.getShard("fancydyes/%s".formatted(dye.getShaderType())))
-                .setTexturingState(new DyeRenderShard(dye))
-                .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
-                .setLightmapState(LIGHTMAP)
-                .setOverlayState(OVERLAY)
-                .setCullState(NO_CULL)
-                .setLayeringState(VIEW_OFFSET_Z_LAYERING);
-            return create(dye.toId().toString(), DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, true, true, builder.createCompositeState(true));
-        });
-    }
+    private static final Map<ResourceLocation, RenderType> ARMOR_TYPES = new Object2ObjectLinkedOpenHashMap<>();
+    private static final Map<ResourceLocation, RenderType> ARMOR_TRIM_TYPES = new Object2ObjectLinkedOpenHashMap<>();
+    private static final Map<ResourceLocation, RenderType> ITEM_TYPES = new Object2ObjectLinkedOpenHashMap<>();
+    private static final Map<ResourceLocation, RenderType> ITEM_DIAGONAL_TYPES = new Object2ObjectLinkedOpenHashMap<>();
+    private static final Map<ResourceLocation, RenderType> ITEM_TRIM_TYPES = new Object2ObjectLinkedOpenHashMap<>();
 
-    public static Function<ResourceLocation, RenderType> getRenderType(FancyDye dye) {
-        return RENDER_TYPES.get(dye);
-    }
+    private static final RenderType ARMOR_TRIM_OFFSET = createArmorTrimType();
+    private static final Function<ResourceLocation, RenderType> ITEM_TRIM_OFFSET = Util.memoize((loc) -> {
+        RenderType.CompositeState compositeState = RenderType.CompositeState.builder()
+            .setShaderState(RENDERTYPE_ENTITY_TRANSLUCENT_CULL_SHADER)
+            .setTextureState(new TextureStateShard(loc, false, false))
+            .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+            .setCullState(NO_CULL)
+            .setLightmapState(LIGHTMAP)
+            .setOverlayState(OVERLAY)
+            .setLayeringState(ITEM_TRIM_LAYERING)
+            .createCompositeState(true);
+        return create("item_trim_offset", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, true, true, compositeState);
+    });
 
-    public static void renderTrim(FancyDye dye, ArmorMaterial armorMaterial, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, ArmorTrim armorTrim, HumanoidModel<?> humanoidModel, boolean bl) {
-        Vector3f color = dye.getColor();
-        TextureAtlasSprite textureAtlasSprite = Minecraft.getInstance().getModelManager().getAtlas(Sheets.ARMOR_TRIMS_SHEET).getSprite(bl ? armorTrim.innerTexture(armorMaterial) : armorTrim.outerTexture(armorMaterial));
-        VertexConsumer vertexConsumer = textureAtlasSprite.wrap(multiBufferSource.getBuffer(FancyDyesRendering.getRenderType(dye).apply(Sheets.ARMOR_TRIMS_SHEET)));
-        FancyDyeRenderSystem.setInverseModelViewMatrix(new Matrix4f(poseStack.last().pose()));
-        FancyDyeRenderSystem.setDyeMatrix(new Matrix4f().rotate((float) Math.toRadians(180), 0, 0, 1));
-        humanoidModel.renderToBuffer(poseStack, vertexConsumer, i, OverlayTexture.NO_OVERLAY, color.x, color.y, color.z, 1.0f);
-    }
-
-    public static void renderDyedModel(FancyDye dye, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, Model humanoidModel, float f, float g, float h, ResourceLocation loc) {
-        Vector3f color = dye.getColor();
-        VertexConsumer vertexConsumer = multiBufferSource.getBuffer(FancyDyesRendering.getRenderType(dye).apply(loc));
-        FancyDyeRenderSystem.setInverseModelViewMatrix(new Matrix4f(poseStack.last().pose()));
-        FancyDyeRenderSystem.setDyeMatrix(new Matrix4f().rotate((float) Math.toRadians(180), 0, 0, 1));
-        humanoidModel.renderToBuffer(poseStack, vertexConsumer, i, OverlayTexture.NO_OVERLAY, color.x * f, color.y * g, color.z * h, 1.0F);
-    }
-
-    public static void renderDyedItem(PoseStack poseStack, MultiBufferSource buffers, RenderType base, List<BakedQuad> list, ItemStack itemStack, int i, int j, ItemColors itemColors, ItemDisplayContext display, Optional<FancyDye> primary, Optional<FancyDye> secondary) {
-        PoseStack.Pose pose = poseStack.last();
-        FancyDyeRenderSystem.setInverseModelViewMatrix(new Matrix4f(pose.pose()));
-
-        Matrix4f textureMatrix = new Matrix4f();
-
-        if (itemStack.is(FancyDye.DIAGONAL_SCROLL)) {
-            textureMatrix.rotate((float) Math.toRadians(45d), 0, 0, 1);
-        }
-
-        FancyDyeRenderSystem.setDyeMatrix(textureMatrix);
-
-        RenderType primaryType = base;
-        RenderType secondaryType = base;
-        if (primary.isPresent()) {
-            primaryType = FancyDyesRendering.getRenderType(primary.get()).apply(InventoryMenu.BLOCK_ATLAS);
-        }
-
-        final boolean isDye = itemStack.getItem() instanceof FancyDyeItem;
-
-        if (isDye) {
-            secondaryType = FancyDyesRendering.getRenderType(((FancyDyeItem)itemStack.getItem()).dye.get()).apply(InventoryMenu.BLOCK_ATLAS);
-        } else if (secondary.isPresent()) {
-            secondaryType = FancyDyesRendering.getRenderType(secondary.get()).apply(InventoryMenu.BLOCK_ATLAS);
-        }
-
-        boolean hasTrim = !secondaryType.equals(base) || ArmorTrim.getTrim(Minecraft.getInstance().level.registryAccess(), itemStack).isPresent();
-
-        for (BakedQuad bakedQuad : list) {
-            ResourceLocation loc = bakedQuad.getSprite().contents().name();
-            boolean isSecondary = hasTrim && (isDye ? bakedQuad.getTintIndex() == 1 : loc.getPath().contains("trims"));
-
-            Vector3f color = (isSecondary ? secondary : primary).map(FancyDye::getColor).orElse(new Vector3f(1));
-            Vector3f tintColor = new Vector3f(1);
-
-            VertexConsumer consumer = buffers.getBuffer(isSecondary ? secondaryType : primaryType);
-
-            if (!itemStack.isEmpty() && bakedQuad.isTinted()) {
-                int t = itemColors.getColor(itemStack, bakedQuad.getTintIndex());
-                if (t != -1) {
-                    float r = (float) (t >> 16 & 0xFF) / 255.0f;
-                    float g = (float) (t >> 8 & 0xFF) / 255.0f;
-                    float b = (float) (t & 0xFF) / 255.0f;
-                    tintColor = new Vector3f(r, g, b);
-                }
-            }
-
-            color = tintColor.mul(color);
-
-            poseStack.pushPose();
-            if (isSecondary) {
-                if (display == ItemDisplayContext.GUI) {
-                    poseStack.translate(0, 0, 0.5f);
-                } else {
-                    float z = display.equals(ItemDisplayContext.GROUND) ? 1.05f : 1.01f;
-
-                    poseStack.translate(-0.0025f, -0.0025f, -((z - 1) / 2));
-                    poseStack.scale(1.005f, 1.005f, z);
-                }
-
-                consumer.putBulkData(poseStack.last(), bakedQuad, color.x, color.y, color.z, i, j);
-            } else {
-                consumer.putBulkData(poseStack.last(), bakedQuad, color.x, color.y, color.z, i, j);
-            }
-
-            poseStack.popPose();
-        }
-    }
-
-    public FancyDyesRendering(String string, VertexFormat vertexFormat, VertexFormat.Mode mode, int i, boolean bl, boolean bl2, Runnable runnable, Runnable runnable2) {
+    FancyDyesRendering(String string, VertexFormat vertexFormat, VertexFormat.Mode mode, int i, boolean bl, boolean bl2, Runnable runnable, Runnable runnable2) {
         super(string, vertexFormat, mode, i, bl, bl2, runnable, runnable2);
     }
 
-    public static class DyeRenderShard extends TexturingStateShard {
-        public DyeRenderShard(FancyDye dye) {
-            super("dye_texturing", dye::setupRenderState, dye::resetRenderState);
+    public static void init() {
+        for (FancyDye dye : FancyDyes.DYES_REGISTRAR) {
+            ARMOR_TYPES.put(dye.toId(), createArmorDye(dye, false));
+            ARMOR_TRIM_TYPES.put(dye.toId(), createArmorDye(dye, true));
+            ITEM_TYPES.put(dye.toId(), createItemDye(dye, false, false));
+            ITEM_DIAGONAL_TYPES.put(dye.toId(), createItemDye(dye, true, false));
+            ITEM_TRIM_TYPES.put(dye.toId(), createItemDye(dye, false, true));
         }
     }
 
-    public static class Shaders {
-        private static final Map<String, Info> MAP = new Object2ObjectOpenHashMap<>();
+    public static RenderType armorTrimOffset() {
+        return ARMOR_TRIM_OFFSET;
+    }
 
-        public static final Info TEXTURE_MULTIPLY = register("fancydyes/texture_multiply", DefaultVertexFormat.NEW_ENTITY);
-        public static final Info TEXTURE_ADDITIVE = register("fancydyes/texture_additive", DefaultVertexFormat.NEW_ENTITY);
-        public static final Info COLOR_MULTIPLY = register("fancydyes/color_multiply", DefaultVertexFormat.NEW_ENTITY);
-        public static final Info COLOR_ADDITIVE = register("fancydyes/color_additive", DefaultVertexFormat.NEW_ENTITY);
-        public static final Info FLAME_MULTIPLY = register("fancydyes/flame_multiply", DefaultVertexFormat.NEW_ENTITY);
-        public static final Info FLAME_ADDITIVE = register("fancydyes/flame_additive", DefaultVertexFormat.NEW_ENTITY);
+    public static RenderType itemTrimOffset(ResourceLocation loc) {
+        return ITEM_TRIM_OFFSET.apply(loc);
+    }
 
-        public static Info register(String path, VertexFormat format) {
-            Info info = new Info(path, format);
-            MAP.put(path, info);
-            return info;
+    private static RenderType createArmorTrimType() {
+        RenderType.CompositeState compositeState = RenderType.CompositeState.builder()
+            .setShaderState(RENDERTYPE_ARMOR_CUTOUT_NO_CULL_SHADER)
+            .setTextureState(new TextureStateShard(Sheets.ARMOR_TRIMS_SHEET, false, false))
+            .setTransparencyState(NO_TRANSPARENCY)
+            .setCullState(NO_CULL)
+            .setLightmapState(LIGHTMAP)
+            .setOverlayState(OVERLAY)
+            .setLayeringState(ARMOR_TRIM_LAYERING)
+            .createCompositeState(true);
+        return create("armor_trim", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, true, false, compositeState);
+    }
+
+    public static void addDyeTypes(Map<RenderType, BufferBuilder> map) {
+        RenderType trimOffset = ITEM_TRIM_OFFSET.apply(TextureAtlas.LOCATION_BLOCKS);
+        if (!map.containsKey(trimOffset)) {
+            map.put(trimOffset, new BufferBuilder(trimOffset.bufferSize()));
         }
 
-        public static void onShaderReload(ResourceProvider provider, ClientReloadShadersEvent.ShadersSink sink) {
-            for (Info info : MAP.values()) {
-                try {
-                    ShaderInstance shader = new ShaderInstance(provider, info.path, info.format);
-                    sink.registerShader(shader, (inst) -> info.instance = inst);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    FancyDyes.LOGGER.warn("Failed to load shader with path \"%s\"!".formatted(info.path));
+        for (RenderType type : ARMOR_TYPES.values()) {
+            if (!map.containsKey(type)) {
+                map.put(type, new BufferBuilder(type.bufferSize()));
+            }
+        }
 
+        for (RenderType type : ARMOR_TRIM_TYPES.values()) {
+            if (!map.containsKey(type)) {
+                map.put(type, new BufferBuilder(type.bufferSize()));
+            }
+        }
+
+        for (RenderType type : ITEM_TYPES.values()) {
+            if (!map.containsKey(type)) {
+                map.put(type, new BufferBuilder(type.bufferSize()));
+            }
+        }
+
+        for (RenderType type : ITEM_DIAGONAL_TYPES.values()) {
+            if (!map.containsKey(type)) {
+                map.put(type, new BufferBuilder(type.bufferSize()));
+            }
+        }
+
+        for (RenderType type : ITEM_TRIM_TYPES.values()) {
+            if (!map.containsKey(type)) {
+                map.put(type, new BufferBuilder(type.bufferSize()));
+            }
+        }
+    }
+
+    public static RenderType getDyeArmorType(FancyDye dye, boolean trim) {
+        return (trim ? ARMOR_TRIM_TYPES : ARMOR_TYPES).get(dye.toId());
+    }
+    public static RenderType getDyeItemType(FancyDye dye, boolean diagonal, boolean trim) {
+        if (trim) {
+            return ITEM_TRIM_TYPES.get(dye.toId());
+        }
+        return (diagonal ? ITEM_DIAGONAL_TYPES : ITEM_TYPES).get(dye.toId());
+    }
+
+    public static RenderType createArmorDye(FancyDye dye, boolean trim) {
+        ShaderStateShard shader = dye.getType().equals(FancyDye.Type.COLORED_TEXTURE) ? RenderStateShard.POSITION_COLOR_TEX_SHADER : RenderStateShard.RENDERTYPE_ARMOR_ENTITY_GLINT_SHADER;
+        VertexFormat format = dye.getType().equals(FancyDye.Type.COLORED_TEXTURE) ? DefaultVertexFormat.POSITION_COLOR_TEX : DefaultVertexFormat.POSITION_TEX;
+
+        CompositeState state = CompositeState.builder()
+            .setShaderState(shader)
+            .setTextureState(new TextureStateShard(dye.getTexture(), true, false))
+            .setWriteMaskState(COLOR_WRITE)
+            .setCullState(NO_CULL)
+            .setDepthTestState(EQUAL_DEPTH_TEST)
+            .setTransparencyState(dye.getBlendMode().equals(FancyDye.BlendMode.ADDITIVE) ? ADDITIVE : MULTIPLICATIVE)
+            .setTexturingState(new TexturingStateShard(dye.toIdString() + "_armor_texturing", () -> {
+                RenderSystem.setTextureMatrix(dye.getTextureMatrix().scale(4f, 1, 1));
+            }, RenderSystem::resetTextureMatrix))
+            .setLayeringState(trim ? ARMOR_TRIM_LAYERING : VIEW_OFFSET_Z_LAYERING)
+            .createCompositeState(false);
+
+        return CompositeRenderType.create(dye.toIdString() + "_armor" + (trim ? "_trim" : ""), format, VertexFormat.Mode.QUADS, 256, state);
+    }
+    public static RenderType createItemDye(FancyDye dye, boolean diagonal, boolean trim) {
+        ShaderStateShard shader = dye.getType().equals(FancyDye.Type.COLORED_TEXTURE) ? RenderStateShard.POSITION_COLOR_TEX_SHADER : RenderStateShard.RENDERTYPE_GLINT_SHADER;
+        VertexFormat format = dye.getType().equals(FancyDye.Type.COLORED_TEXTURE) ? DefaultVertexFormat.POSITION_COLOR_TEX : DefaultVertexFormat.POSITION_TEX;
+
+        CompositeState state = CompositeState.builder()
+            .setShaderState(shader)
+            .setTextureState(new TextureStateShard(dye.getTexture(), true, false))
+            .setWriteMaskState(COLOR_WRITE)
+            .setCullState(NO_CULL)
+            .setDepthTestState(EQUAL_DEPTH_TEST)
+            .setTransparencyState(dye.getBlendMode().equals(FancyDye.BlendMode.ADDITIVE) ? ADDITIVE : MULTIPLICATIVE)
+            .setTexturingState(new TexturingStateShard(dye.toIdString() + "_armor_texturing", () -> {
+                Matrix4f mat = dye.getTextureMatrix();
+                if (diagonal) {
+                    mat.rotate((float)Math.toRadians(45), 0, 0, 1);
                 }
-            }
-        }
+                mat.scale(48f, 48f, 1);
+                RenderSystem.setTextureMatrix(mat);
+            }, RenderSystem::resetTextureMatrix))
+            .setLayeringState(trim ? ITEM_TRIM_LAYERING : NO_LAYERING)
+            .createCompositeState(false);
 
-        public static ShaderStateShard getShard(String path) {
-            return MAP.get(path).getShard();
-        }
-
-        public static class Info {
-            private ShaderInstance instance;
-            private ShaderStateShard shard;
-            private VertexFormat format;
-
-            public String path;
-
-            public Info(String path, VertexFormat format) {
-                this.path = path;
-                this.format = format;
-                this.shard = new ShaderStateShard(() -> instance);
-            }
-
-            public ShaderStateShard getShard() {
-                return shard;
-            }
-        }
+        return create(dye.toIdString() + "_item" + (diagonal ? "_diagonal" : ""), format, VertexFormat.Mode.QUADS, 256, true, false, state);
     }
+
+    public static final RenderStateShard.TransparencyStateShard ADDITIVE = new RenderStateShard.TransparencyStateShard("dye_additive", () -> {
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_COLOR, GlStateManager.DestFactor.ONE);
+    }, () -> {
+        RenderSystem.disableBlend();
+        RenderSystem.defaultBlendFunc();
+    });
+
+    public static final RenderStateShard.TransparencyStateShard MULTIPLICATIVE = new RenderStateShard.TransparencyStateShard("dye_multiplicative", () -> {
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(GlStateManager.SourceFactor.DST_COLOR, GlStateManager.DestFactor.SRC_COLOR);
+    }, () -> {
+        RenderSystem.disableBlend();
+        RenderSystem.defaultBlendFunc();
+    });
 }

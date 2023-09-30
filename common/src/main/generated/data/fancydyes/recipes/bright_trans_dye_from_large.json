@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "fancydyes:bright_trans",
+  "ingredients": [
+    {
+      "item": "fancydyes:small_bright_trans_dye"
+    },
+    {
+      "item": "fancydyes:small_bright_trans_dye"
+    }
+  ],
+  "result": {
+    "item": "fancydyes:bright_trans_dye"
+  }
+}
