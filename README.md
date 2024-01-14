@@ -2,8 +2,8 @@
 
 This mod adds special new dyes, that can be used on any armor to change how they look.
 
-![Preview of dyes on armor](https://www.haizor.net/minecraft/fancy-dyes/1-20/armor.gif?q)  
-![All dye items](https://www.haizor.net/minecraft/fancy-dyes/1-20/all_dyes.gif?q)
+![Preview of dyes on armor](https://www.haizor.net/minecraft/fancy-dyes/1-20/armor.gif)  
+![All dye items](https://www.haizor.net/minecraft/fancy-dyes/1-20/all_dyes.gif)
 
 ## Usage
 
@@ -45,12 +45,6 @@ Small dye bottles can used to reclaim dyed armor trims. Small dye bottles are cr
 
 ## Compatibility
 
-<details>
-<summary>Shaders</summary>
-
-If you use shaders, all dyed items that aren't being rendered in your inventory are invisible. This is probably a [fundamental incompatibility](https://github.com/IrisShaders/Iris/blob/1.20-new/docs/development/compatibility/core-shaders.md), but I may try and revisit this issue in the future.
-
-</details>
 <details>
 <summary>Modded Armor</summary>
 

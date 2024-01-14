@@ -34,7 +34,7 @@ public class TexturedDye implements FancyDye {
 
         Texturing STATIC = Matrix4f::new;
 
-        Texturing VERTICAL_SCROLL = scroll(180f, 0.2f);
+        Texturing VERTICAL_SCROLL = scroll(180, 0.2f);
 
         Texturing FLAME = scroll(0f, 1f);
 
@@ -43,7 +43,7 @@ public class TexturedDye implements FancyDye {
                 long l = Util.getMillis();
                 float h = (l / 1000f) * (speed);
 
-                return new Matrix4f().translation(0.0f, h * 2, 0.0f).rotate((float)Math.toRadians(angle), 0, 0, 1);
+                return new Matrix4f().translation(0.0f, h * 2, 0.0f).rotateZ((float)Math.toRadians(angle));
             };
         }
     }

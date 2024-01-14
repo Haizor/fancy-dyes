@@ -5,9 +5,9 @@ import net.minecraft.resources.ResourceLocation;
 import org.joml.Vector3f;
 
 public class BrightColorDye implements FancyDye {
-    public final Vector3f color;
+    public final FancyDyeColor color;
 
-    public BrightColorDye(Vector3f color) {
+    public BrightColorDye(FancyDyeColor color) {
         this.color = color;
     }
 
@@ -17,18 +17,7 @@ public class BrightColorDye implements FancyDye {
     }
 
     @Override
-    public Type getType() {
-        return Type.COLORED_TEXTURE;
-    }
-
-    @Override
-    public Vector3f getColor() {
-
-        return color.mul(0.75f, new Vector3f());
-    }
-
-    @Override
     public ResourceLocation getTexture() {
-        return FancyDyes.id("textures/dye/solid.png");
+        return FancyDyes.id("textures/dye/color/%s.png".formatted(color.name().toLowerCase()));
     }
 }

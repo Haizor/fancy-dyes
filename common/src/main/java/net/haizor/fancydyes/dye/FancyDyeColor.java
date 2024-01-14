@@ -43,8 +43,8 @@ public enum FancyDyeColor {
 
     public static void registerDyes() {
         for (FancyDyeColor color : FancyDyeColor.values()) {
-            FancyDyes.registerDye(color.toString(), () -> new ColorDye(color.asVector3f()));
-            FancyDyes.registerDye("bright_%s".formatted(color.toString()), () -> new BrightColorDye(color.asVector3f()));
+            FancyDyes.registerDye(color.toString(), () -> new ColorDye(color));
+            FancyDyes.registerDye("bright_%s".formatted(color.toString()), () -> new BrightColorDye(color));
         }
     }
 }

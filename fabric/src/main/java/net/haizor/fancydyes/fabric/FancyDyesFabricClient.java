@@ -6,8 +6,10 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.haizor.fancydyes.client.FancyDyedItemTooltip;
 import net.haizor.fancydyes.client.FancyDyesClient;
+import net.haizor.fancydyes.client.FancyDyesRendering;
 import net.haizor.fancydyes.dye.FancyDye;
-import net.haizor.fancydyes.fabric.compat.gecko.GeckoLibCompat;
+import net.haizor.fancydyes.fabric.client.FancyDyesXplatFabric;
+import net.haizor.fancydyes.fabric.client.compat.gecko.GeckoLibCompat;
 import net.haizor.fancydyes.item.FancyDyeItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
@@ -23,9 +25,10 @@ import java.util.Optional;
 public class FancyDyesFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+        FancyDyesRendering.PLATFORM = new FancyDyesXplatFabric();
         FancyDyesClient.init();
         if (FabricLoader.getInstance().isModLoaded("geckolib")) {
-            GeoRenderEvent.Armor.Post.EVENT.register(GeckoLibCompat::postRenderEvent);
+            GeoRenderEvent.Armor.CompileRenderLayers.EVENT.register(GeckoLibCompat::compileLayersEvent);
         }
 
         ClientTooltipEvent.RENDER_PRE.register(FancyDyesFabricClient::tooltipRenderPre);

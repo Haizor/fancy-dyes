@@ -25,6 +25,7 @@
   },
   "mixins": [
     "fancydyes-fabric.mixins.json",
+    "fancydyes-fabric-azurelib.mixins.json",
     "fancydyes-common.mixins.json"
   ],
   "depends": {

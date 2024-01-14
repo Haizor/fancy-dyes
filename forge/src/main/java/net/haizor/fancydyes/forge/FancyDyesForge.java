@@ -7,7 +7,8 @@ import net.haizor.fancydyes.client.FancyDyedItemTooltip;
 import net.haizor.fancydyes.client.FancyDyesClient;
 import net.haizor.fancydyes.client.FancyDyesRendering;
 import net.haizor.fancydyes.dye.FancyDye;
-import net.haizor.fancydyes.forge.compat.gecko.GeckoLibCompat;
+import net.haizor.fancydyes.forge.client.FancyDyesXplatForge;
+import net.haizor.fancydyes.forge.client.compat.gecko.GeckoLibCompat;
 import net.haizor.fancydyes.forge.mixin.RenderBuffersAccessor;
 import net.haizor.fancydyes.item.FancyDyeItem;
 import net.minecraft.ChatFormatting;
@@ -29,7 +30,6 @@ import java.util.Optional;
 @Mod(FancyDyes.MOD_ID)
 public class FancyDyesForge {
     public FancyDyesForge() {
-        // Submit our event bus to let architectury register our content on the right time
         EventBuses.registerModEventBus(FancyDyes.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
         FancyDyes.init();
 
@@ -40,6 +40,7 @@ public class FancyDyesForge {
     private static class ModBusEvents {
         @SubscribeEvent
         public static void onClientInit(FMLClientSetupEvent event) {
+            FancyDyesRendering.PLATFORM = new FancyDyesXplatForge();
             FancyDyesClient.init();
             if (ModList.get().isLoaded("geckolib")) {
                 MinecraftForge.EVENT_BUS.register(GeckoLibCompat.class);
@@ -74,7 +75,4 @@ public class FancyDyesForge {
             }
         }
     }
-
-
-
 }

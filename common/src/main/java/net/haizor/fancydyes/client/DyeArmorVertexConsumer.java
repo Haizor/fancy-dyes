@@ -7,15 +7,13 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 public class DyeArmorVertexConsumer implements VertexConsumer {
-    final VertexConsumer base;
-    final Entity entity;
-    final Matrix4f matrix;
-    float vertexX;
-    float vertexY;
-    float vertexZ;
-    public DyeArmorVertexConsumer(VertexConsumer base, Entity entity, PoseStack pose) {
+    public final VertexConsumer base;
+    public final Matrix4f matrix;
+    protected float vertexX;
+    protected float vertexY;
+    protected float vertexZ;
+    public DyeArmorVertexConsumer(VertexConsumer base, PoseStack pose) {
         this.base = base;
-        this.entity = entity;
         this.matrix = pose.last().pose().invert(new Matrix4f());
     }
 

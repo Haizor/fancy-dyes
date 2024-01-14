@@ -5,12 +5,11 @@
   "minVersion": "0.8",
   "client": [
     "MixinAbstractContainerScreen",
+    "MixinArmorRenderer",
     "MixinHumanoidArmorLayer",
-    "MixinItemRenderer",
-    "MixinRenderBuffers"
+    "MixinItemRenderer"
   ],
-  "mixins": [
-  ],
+  "mixins": [],
   "injectors": {
     "defaultRequire": 1
   }

@@ -31,16 +31,11 @@ public interface FancyDye {
         return this.toId().withPath(s -> "%s%s_dye".formatted(secondary ? "small_" : "", s));
     }
 
-    default Vector3f getColor() { return new Vector3f(1f); }
     default BlendMode getBlendMode() {
         return BlendMode.MULTIPLICATIVE;
     }
     default Matrix4f getTextureMatrix() {
         return new Matrix4f();
-    }
-
-    default Type getType() {
-        return Type.ANIMATED_TEXTURE;
     }
 
     ResourceLocation getTexture();
@@ -91,10 +86,5 @@ public interface FancyDye {
     enum BlendMode {
         ADDITIVE,
         MULTIPLICATIVE
-    }
-
-    enum Type {
-        ANIMATED_TEXTURE,
-        COLORED_TEXTURE
     }
 }

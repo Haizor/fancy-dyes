@@ -11,6 +11,11 @@
     "MixinSmithingMenu"
   ],
   "client": [
-    "MixinElytraLayer"
+    "MixinElytraLayer",
+    "MixinItemInHandRenderer",
+    "MixinMainTarget",
+    "MixinRenderBuffers",
+    "MixinRenderSystem",
+    "MixinRenderTarget"
   ]
 }

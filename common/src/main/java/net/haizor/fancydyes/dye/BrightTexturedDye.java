@@ -12,9 +12,4 @@ public class BrightTexturedDye extends TexturedDye {
     public BlendMode getBlendMode() {
         return BlendMode.ADDITIVE;
     }
-
-    @Override
-    public Vector3f getColor() {
-        return new Vector3f(0.5f);
-    }
 }

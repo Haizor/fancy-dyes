@@ -1,0 +1,13 @@
+{
+  "required": false,
+  "package": "net.haizor.fancydyes.fabric.client.compat.azurelib.mixins",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "client": [
+    "MixinGeoArmorRenderer"
+  ],
+  "mixins": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

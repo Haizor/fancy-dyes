@@ -39,11 +39,13 @@ dependencies {
     modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
     // Remove the next line if you don't want to depend on the API
     modApi "dev.architectury:architectury-fabric:${rootProject.architectury_version}"
-
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.3.2"))
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
 
-    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:12.0.626"
+    modCompileOnlyApi "maven.modrinth:sodium:mc1.20.1-0.5.3"
+    modCompileOnlyApi "maven.modrinth:iris:1.6.11+1.20.1"
+    modCompileOnlyApi "mod.azure.azurelibarmor:azurelibarmor-fabric-1.20.1:2.0.3"
 
     modRuntimeOnly "software.bernie.geckolib:geckolib-fabric-1.20.1:4.2.2"
     modCompileOnlyApi "software.bernie.geckolib:geckolib-fabric-1.20.1:4.2.2"
@@ -61,18 +63,13 @@ shadowJar {
     exclude "architectury.common.json"
 
     configurations = [project.configurations.shadowCommon]
-    classifier "dev-shadow"
+    archiveClassifier = "dev-shadow"
 }
 
 remapJar {
     injectAccessWidener = true
     input.set shadowJar.archiveFile
     dependsOn shadowJar
-    classifier null
-}
-
-jar {
-    classifier "dev"
 }
 
 sourcesJar {
