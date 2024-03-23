@@ -7,12 +7,15 @@ import dev.architectury.platform.Platform;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import net.haizor.fancydyes.FancyDyes;
 import net.haizor.fancydyes.dye.FancyDye;
+import net.haizor.fancydyes.mixin.TextureAtlasAccessor;
 import net.minecraft.Util;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -225,11 +228,15 @@ public class FancyDyesRendering extends RenderType {
             .setDepthTestState(EQUAL_DEPTH_TEST)
             .setTransparencyState(dye.getBlendMode() == FancyDye.BlendMode.ADDITIVE ? ADDITIVE : MULTIPLICATIVE)
             .setTexturingState(new TexturingStateShard(dye.toIdString() + "_item_texturing", () -> {
-                Matrix4f mat = dye.getTextureMatrix();
+                //TODO: there's probably a better way to get the current texture atlas, but w/e
+                TextureAtlasAccessor atlas = (TextureAtlasAccessor) Minecraft.getInstance().getModelManager().getAtlas(TextureAtlas.LOCATION_BLOCKS);Matrix4f mat = dye.getTextureMatrix();
 
-                //TODO: more mods = more weird matrix issues. i'm done lmao
-                float xScale = 48;
-                float yScale = 48;
+                float xScale = (atlas.invokeGetWidth() / 2048f) * 96;
+                float yScale = (atlas.invokeGetHeight() / 2048f) * 96;
+
+                if (diagonal) {
+                    mat.rotateZ(-(float)Math.toRadians(45));
+                }
 
                 mat.scale(xScale, yScale, 1);
 
@@ -299,6 +306,8 @@ public class FancyDyesRendering extends RenderType {
             }
 
             primaryDye.ifPresent(dye -> {
+                //TODO: it was the texture atlas expanding that causes the dye stretching improperly.
+                TextureAtlasSprite dyeSprite = Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(dye.getTexture());
                 VertexConsumer dyeConsumer = source.getBuffer(FancyDyesRendering.getDyeItemType(dye, itemStack.is(FancyDye.DIAGONAL_SCROLL), false));
                 for (BakedQuad quad : primaryQuads) {
                     dyeConsumer.putBulkData(pose, quad, 1, 1, 1, i, j);

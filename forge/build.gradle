@@ -31,7 +31,8 @@ dependencies {
     forge "net.minecraftforge:forge:${rootProject.forge_version}"
     // Remove the next line if you don't want to depend on the API
     modApi "dev.architectury:architectury-forge:${rootProject.architectury_version}"
-
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.3.5"))
+    implementation(include("io.github.llamalad7:mixinextras-forge:0.3.5"))
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
 
@@ -41,12 +42,16 @@ dependencies {
     modCompileOnlyApi "curse.maven:rubidium-574856:4952685"
     modCompileOnlyApi "curse.maven:oculus-581495:4767500"
 
-    modRuntimeOnly "curse.maven:rubidium-574856:4952685"
-    modRuntimeOnly "curse.maven:oculus-581495:4767500"
-
-    modRuntimeOnly "curse.maven:epic-samurais-848381:4771585"
-    modRuntimeOnly "curse.maven:the-twilight-forest-227639:4755494"
-    modRuntimeOnly "curse.maven:kawaii-dishes-694309:4701259"
+//    modRuntimeOnly "curse.maven:rubidium-574856:4952685"
+//    modRuntimeOnly "curse.maven:oculus-581495:4767500"
+//
+//    modRuntimeOnly "curse.maven:epic-samurais-848381:4771585"
+//    modRuntimeOnly "curse.maven:the-twilight-forest-227639:4755494"
+//    modRuntimeOnly "curse.maven:kawaii-dishes-694309:4701259"
+//    modRuntimeOnly "curse.maven:zeta-968868:5151582"
+//    modRuntimeOnly "curse.maven:quark-243121:5151658"
+//    modRuntimeOnly "curse.maven:curios-309927:5066845"
+//    modRuntimeOnly "curse.maven:mana-and-artifice-406360:5204009"
 }
 
 processResources {

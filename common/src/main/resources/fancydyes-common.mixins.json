@@ -16,6 +16,7 @@
     "MixinMainTarget",
     "MixinRenderBuffers",
     "MixinRenderSystem",
-    "MixinRenderTarget"
+    "MixinRenderTarget",
+    "TextureAtlasAccessor"
   ]
 }

@@ -17,6 +17,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorItem;
@@ -41,6 +42,8 @@ abstract class MixinHumanoidArmorLayer<T extends LivingEntity, M extends Humanoi
 
     @Shadow protected abstract ResourceLocation getArmorLocation(ArmorItem armorItem, boolean bl, @Nullable String string);
 
+    @Shadow public abstract ResourceLocation getArmorResource(Entity entity, ItemStack stack, EquipmentSlot slot, @Nullable String type);
+
     MixinHumanoidArmorLayer(RenderLayerParent<T, M> renderLayerParent) {
         super(renderLayerParent);
     }
@@ -54,10 +57,10 @@ abstract class MixinHumanoidArmorLayer<T extends LivingEntity, M extends Humanoi
 
         if (primaryDye.isPresent() || secondaryDye.isPresent()) {
             //ok, so basically without this, the order of the buffers is messed up??? and so it doesn't work with iris/oculus???
-            bufferSource.getBuffer(FancyDyesRendering.getArmorStencilWriter(this.getArmorLocation(armorItem, false, null), false));
-            bufferSource.getBuffer(FancyDyesRendering.getArmorStencilWriter(this.getArmorLocation(armorItem, true, null), false));
+            bufferSource.getBuffer(FancyDyesRendering.getArmorStencilWriter(this.getArmorResource(entity, stack, equipmentSlot, null), false));
+            bufferSource.getBuffer(FancyDyesRendering.getArmorStencilWriter(this.getArmorResource(entity, stack, equipmentSlot, null), false));
 
-            VertexConsumer mainStencil = bufferSource.getBuffer(FancyDyesRendering.getArmorStencilWriter(this.getArmorLocation(armorItem, bl, null), false));
+            VertexConsumer mainStencil = bufferSource.getBuffer(FancyDyesRendering.getArmorStencilWriter(this.getArmorResource(entity, stack, equipmentSlot, null), false));
             armorModel.renderToBuffer(poseStack, mainStencil, i, OverlayTexture.NO_OVERLAY, 1f, 1f, 1f, 1f);
 
             Optional<ArmorTrim> trim = ArmorTrim.getTrim(entity.level().registryAccess(), stack);

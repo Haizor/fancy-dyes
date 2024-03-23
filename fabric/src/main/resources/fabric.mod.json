@@ -17,7 +17,7 @@
       "net.haizor.fancydyes.fabric.FancyDyesFabric"
     ],
     "client": [
-      "net.haizor.fancydyes.fabric.FancyDyesFabricClient"
+      "net.haizor.fancydyes.fabric.client.FancyDyesFabricClient"
     ],
     "fabric-datagen": [
       "net.haizor.fancydyes.fabric.data.FancyDyesDataGenerator"

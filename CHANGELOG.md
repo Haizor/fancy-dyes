@@ -1,3 +1,3 @@
-2.2.0
-* Dye rendering changed again, should work better overall
-* Added mod compatibility
+2.2.1
+* Dye textures are scaled properly on items now
+* Fix compatibility with Mana and Artifice, and Continuity on Fabric

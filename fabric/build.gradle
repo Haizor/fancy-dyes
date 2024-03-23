@@ -45,10 +45,15 @@ dependencies {
 
     modCompileOnlyApi "maven.modrinth:sodium:mc1.20.1-0.5.3"
     modCompileOnlyApi "maven.modrinth:iris:1.6.11+1.20.1"
+    modCompileOnlyApi "maven.modrinth:indium:1.0.27+mc1.20.1"
     modCompileOnlyApi "mod.azure.azurelibarmor:azurelibarmor-fabric-1.20.1:2.0.3"
 
     modRuntimeOnly "software.bernie.geckolib:geckolib-fabric-1.20.1:4.2.2"
     modCompileOnlyApi "software.bernie.geckolib:geckolib-fabric-1.20.1:4.2.2"
+
+    modRuntimeOnly "maven.modrinth:moonlight:WOsQY4RE"
+    modRuntimeOnly "maven.modrinth:continuity:3.0.0-beta.4+1.20.1"
+    modRuntimeOnly "maven.modrinth:indium:1.0.27+mc1.20.1"
 }
 
 processResources {

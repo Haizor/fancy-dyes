@@ -1,14 +1,15 @@
-package net.haizor.fancydyes.fabric;
+package net.haizor.fancydyes.fabric.client;
 
 import dev.architectury.event.EventResult;
 import dev.architectury.event.events.client.ClientTooltipEvent;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
+import net.fabricmc.fabric.api.client.model.loading.v1.ModelModifier;
 import net.fabricmc.loader.api.FabricLoader;
 import net.haizor.fancydyes.client.FancyDyedItemTooltip;
 import net.haizor.fancydyes.client.FancyDyesClient;
 import net.haizor.fancydyes.client.FancyDyesRendering;
 import net.haizor.fancydyes.dye.FancyDye;
-import net.haizor.fancydyes.fabric.client.FancyDyesXplatFabric;
 import net.haizor.fancydyes.fabric.client.compat.gecko.GeckoLibCompat;
 import net.haizor.fancydyes.item.FancyDyeItem;
 import net.minecraft.ChatFormatting;
