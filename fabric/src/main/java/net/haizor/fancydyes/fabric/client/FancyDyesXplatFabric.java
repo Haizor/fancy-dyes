@@ -2,8 +2,8 @@ package net.haizor.fancydyes.fabric.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.coderbot.batchedentityrendering.impl.BlendingStateHolder;
-import net.coderbot.batchedentityrendering.impl.TransparencyType;
+import net.irisshaders.batchedentityrendering.impl.BlendingStateHolder;
+import net.irisshaders.batchedentityrendering.impl.TransparencyType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.haizor.fancydyes.client.DyeArmorVertexConsumer;
 import net.haizor.fancydyes.client.FancyDyesRendering;
